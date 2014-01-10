@@ -1,0 +1,17 @@
+{
+	"name":			"demos",
+	"files":		{
+		"simple.html": {
+			"title":	"Game-Framework - Simple demo",
+			"filename":	"demos/simple.html"
+		}
+	},
+	"template":		"main.html",
+	"dependencies":	[
+		"jquery",
+		"bootstrap",
+		"examples",
+		"game-framework",
+		"AngularJS"
+	]
+}

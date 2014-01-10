@@ -1,0 +1,17 @@
+{
+	"name": "game-framework",
+	"version": "1.0.0",
+	"main": [
+		"core.js",
+		"games/trivia.js",
+		"plugins/fleetwit.js",
+		"displays/image.js",
+		"css/game-framework.css"
+	],
+	"dependencies":	{
+		"jquery":		"latest",
+		"underscore":	"latest",
+		"json2":		"latest",
+		"FormJS":		"latest"
+	}
+}

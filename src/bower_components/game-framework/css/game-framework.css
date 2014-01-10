@@ -1,0 +1,28 @@
+.device-preview {
+	width:		480px;
+	height:		800px;
+	border:		2px solid #333333;
+	margin:		0 auto;
+}
+
+.gf-label {
+	text-align:		center;
+	font-weight:	bold;
+	font-size:		16px;
+	margin-bottom:	6px;
+}
+
+#game .radio {
+	padding:		0;
+}
+#game .radio > input {
+	display:		none;
+}
+#game .radio > input + label {
+	display:		block;
+	width:			100%;
+	border:			1px solid #000000;
+}
+#game .radio > input[type="radio"]:checked + label {
+	border:			1px solid #ff0000;
+}
