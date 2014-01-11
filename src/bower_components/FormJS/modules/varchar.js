@@ -29,6 +29,10 @@
 			return this.field.val();
 		}
 	}
+	component.prototype.setFocus = function() {
+		console.log("setFocus()",this.field);
+		this.field.focus();
+	}
 	// Return true if the field has been filled.
 	component.prototype.isFilled = function() {
 		return this.val().trim() != "";

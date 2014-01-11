@@ -1,0 +1,7 @@
+{
+	"name": "lesscss",
+	"version": "1.6.0",
+	"main": [
+		"https://raw.github.com/less/less.js/master/dist/less-1.6.0.min.js"
+	]
+}

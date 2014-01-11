@@ -1,0 +1,193 @@
+.box-shadow (@x: 0px, @y: 3px, @blur: 5px, @color: #000000) {
+	-webkit-box-shadow: @x @y @blur @color;
+	-moz-box-shadow: @x @y @blur @color;
+	box-shadow: @x @y @blur @color;
+}
+.box-shadow-inset (@x: 0px, @y: 3px, @blur: 5px, @color: #000000) {
+	-webkit-box-shadow: inset @x @y @blur @color;
+	-moz-box-shadow: inset @x @y @blur @color;
+	box-shadow: inset @x @y @blur @color;
+}
+.text-inset(@color, @presscolor: #ffffff) {
+	text-shadow: -1px -1px 1px @presscolor;
+	color: @color;
+}
+.text-inset-lightbg(@color, @presscolor: #ffffff) {
+	text-shadow: 1px 1px 1px @presscolor;
+	color: @color;
+}
+.gradient (@origin: left, @start: #ffffff, @stop: #000000) {
+	background-color: @start;
+	background-image: -webkit-linear-gradient(@origin, @start, @stop);
+	background-image: -moz-linear-gradient(@origin, @start, @stop);
+	background-image: -o-linear-gradient(@origin, @start, @stop);
+	background-image: -ms-linear-gradient(@origin, @start, @stop);
+	background-image: linear-gradient(@origin, @start, @stop);
+}
+
+.button(@color: #7CC7EC) {
+	.gradient(top, lighten(@color, 5%), darken(@color, 5%));
+	border:				1px solid darken(@color, 30%);
+	.box-shadow-inset(0, 1px, 0, lighten(@color, 20%));
+	.text-inset(#ffffff, rgba(0,0,0,0.4));
+	width:				100%;
+	padding:			8px;
+	text-align:			center;
+	font-size:			16px;
+	font-weight:		bold;
+	cursor:				pointer;
+}
+.button-active(@color: #7CC7EC) {
+	.gradient(bottom, darken(@color, 10%), darken(@color, 25%));
+	.box-shadow-inset(-1px, 2px, 3px, darken(@color, 40%));
+}
+
+/* Menu fix on the demo */
+.dropdown-menu {
+	z-index:		5000;
+	max-height:		400px;
+	overflow:		auto;
+}
+
+table.game-framework {
+	width:		100%;
+	height:		100%;
+	td {
+		padding:	0;
+		margin:		0;
+		vertical-align:	top;
+	}
+	.header {
+		height:		20px;
+	}
+	.content {
+		background-color:	#F8F8F8;
+		height:				100%;
+		overflow:			auto;
+		
+		.game {
+			height:			100%;
+			position:		relative;
+			overflow:		hidden;
+			
+			.screen {
+				position:	absolute;
+				top:		0;
+				left:		0;
+				width:		100%;
+				height:		100%;
+				
+				.layers {
+					width:			100%;
+					height:			100%;
+					position:		relative;
+					overflow:		auto;
+					
+					.layer {
+						position:	absolute;
+						top:		0;
+						left:		0;
+						width:		100%;
+						height:		100%;
+					}
+					
+					.layer-instructions {
+						background-color:	rgba(0,0,0,0.9);
+						z-index:			2000;
+						
+						.gf-header {
+							text-align:		center;
+							color:			#ffffff;
+							font-size:		16px;
+							font-weight:	bold;
+							padding:		10px;
+						}
+						.gf-bg {
+							cursor:			pointer;
+							width:			100%;
+							height:			100%;
+							background-position:	center center;
+							background-repeat:		no-repeat;
+						}
+						.gf-footer {
+							height:			0;
+						}
+					}
+					.layer-game {
+						height:				100%;
+						width:				100%;
+						z-index:			1000;
+						
+						.gf-label {
+							.text-inset-lightbg(#5F5F5F, #ffffff);
+							text-align:		center;
+							font-weight:	bold;
+							font-size:		24px;
+							margin-bottom:	6px;
+							height:			100%;
+							vertical-align:	middle;
+						}
+						.gf-display {
+							height:			0;
+						}
+						.gf-game {
+							height:			0;
+							.form-group {
+								margin:		0; /* bootstrap form fix */
+							}
+						}
+					}
+				}
+			}
+			.screen.gf-penalty {
+				background-color:	rgba(0,0,0,0.9);
+				z-index:			3000;
+				
+				td {
+					vertical-align:	middle;
+					
+					.gf-label {
+						text-align:		center;
+						font-size:		20px;
+						.text-inset(#ffffff, rgba(0,0,0,0.4));
+					}
+					.gf-timer {
+						line-height:	50px;
+						text-align:		center;
+						font-size:		20px;
+						.text-inset(#ffffff, rgba(0,0,0,0.4));
+					}
+				}
+			}
+		}
+	}
+	.footer {
+		height:		0;
+		background-color:	#EDEDED;
+	}
+	
+	.gf-btn {
+		.button();
+	}
+	
+	.radio {
+		padding:		0;
+		margin:			0;
+	}
+	.radio > input {
+		display:		none;
+	}
+	.radio > input + label {
+		display:		block;
+		.button();
+	}
+	.radio > input[type="radio"]:checked + label {
+		.button-active();
+	}
+}
+
+
+.device-preview {
+	margin:		0 auto;
+	.box-shadow(0, 0, 5px);
+}

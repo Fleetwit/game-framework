@@ -1,8 +1,8 @@
 {
-	"name":			"index",
+	"name":			"tester",
 	"files":		{
 		"index.html": {
-			"title":	"FormJS - The easiest and most powerful way to create forms and surveys.",
+			"title":	"Game-Framework - Device Tester",
 			"filename":	"index.html"
 		}
 	},
@@ -11,7 +11,8 @@
 		"jquery",
 		"bootstrap",
 		"examples",
-		"FormJS",
-		"prismjs"
+		"game-framework",
+		"AngularJS",
+		"lesscss"
 	]
 }

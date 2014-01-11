@@ -10,8 +10,9 @@
 		
 		<title>{{title}}</title>
 		
-		{{include_js}}
 		{{include_css}}
+		{{include_less}}
+		{{include_js}}
 		
 	</head>
 	<body>
@@ -32,15 +33,7 @@
 					</div>
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav">
-							<li {%if file=="index.html"%}class="active"{%endif%}><a href="{{relativepath}}index.html">Getting started</a></li>
-							<li class="dropdown {%if page.name=="demos"%}active{%endif%}">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Demos <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="{{relativepath}}demos/simple.html">Simple Form</a></li>
-									<li><a href="{{relativepath}}demos/conditions.html">With Conditions</a></li>
-									<li><a href="{{relativepath}}demos/custom-html.html">Custom Rendering</a></li>
-								</ul>
-							</li>
+							<li {%if page.name=="tester" and file=="index.html"%}class="active"{%endif%}><a href="{{relativepath}}index.html">Device Tester</a></li>
 							<li><a href="mailto:julien@twenty-six-medias.com">Contact</a></li>
 						</ul>
 					</div><!--/.nav-collapse -->

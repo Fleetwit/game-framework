@@ -76,18 +76,6 @@
 				this.formErrors.push("Plugin '"+pluginName+"' is missing.");
 			}
 		});
-		/*
-		var plugin;
-		for (plugin in window.formjsFactory.plugins) {
-			//if (this[plugin]) {
-			//	console.error("/!\ Plugin '"+plugin+"' was refused. This name is either already in use internally or already registered by another plugin.");
-			//	this.formErrors.push("Plugin '"+plugin+"' was refused. This name is either already in use internally or already registered by another plugin.");
-			//} else {
-				this[plugin] = window.formjsFactory.plugins[plugin](this);
-				console.log("Plugin '"+plugin+"' has been installed.", this[plugin]);
-			//}
-		}
-		*/
 		
 		// Conditionnal Framework, used to write easy display conditions in the form.
 		this.conditionFramework = function(fieldName) {
@@ -153,6 +141,7 @@
 			onInit:		function() {}
 		}, options);
 		
+		var counter = 0;
 		_.each(this.options.form, function(item) {
 			if (item.condition && typeof item.condition == "string") {
 				// If the condition is a string (to be able to save in a database for example), we need to parse it. We don't want to polute the current scope, so we create a new scope using an anonymous function.
@@ -173,13 +162,24 @@
 				} else {
 					// Create a new instance of the question type
 					var instance 		= new window.formjsFactory.components[item.type](scope, item);
+					
 					// Create a new line (HTML form line)
 					var line = scope.createLine(item);
 					// Build the field in that line
 					instance.build(line);
+					
+					// Set the focus on the first field
+					if (counter == 0 && instance.setFocus) {
+						instance.setFocus();
+					}
+					
 					// Setup the update event
 					// When a field is updated, the conditions are checked again to show/hide the proper questions.
 					instance.onUpdate(function() {
+						// onChange() Callback
+						scope.options.onChange(instance.val(), scope);
+						
+						// Re-execute the conditions
 						scope.executeConditions();
 					});
 					// Create the object
@@ -196,6 +196,7 @@
 				}
 				return this;
 			}
+			counter++;
 		});
 		
 		// Setup the click event on the submit button
@@ -214,11 +215,19 @@
 	formjs.prototype.submit = function() {
 		// If the form validates (all of the questions), we call onSubmit(), else onError()
 		if (this.validate()) {
-			this.options.onSubmit(this.data, this);	// scope.data is filled by validate(), and is a serialized object that contains the answers to the form.
+			this.options.onSubmit(this.data, this);		// scope.data is filled by validate(), and is a serialized object that contains the answers to the form.
 		} else {
 			this.options.onError(this.errors, this);	// scope.errors is filled by validate(), and list the questions that are not validating.
 		}
 	};
+	
+	// Focus the first item of the form
+	formjs.prototype.focus = function() {
+		if (this.fields[this.options.form[0].name].instance.setFocus) {
+			this.fields[this.options.form[0].name].instance.setFocus();
+		}
+	};
+	
 	// validating the form
 	formjs.prototype.validate = function(data) {
 		// We simply call the validate() method for each question, and return true only if all of the visible (active) questions are validating.

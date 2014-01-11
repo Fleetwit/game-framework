@@ -8,8 +8,7 @@
 		this.line		= line;
 		this.img 		= window.formjsFactory.dom("img", line.display);
 		this.img.css("width", "100%");
-		this.img.attr('src', this.data.display.image)
-		console.log("this.line",this.line);
+		this.img.attr('src', this.data.display.image);
 	}
 	display.prototype.init = function() {
 		
