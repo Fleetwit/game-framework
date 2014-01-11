@@ -1,0 +1,316 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="FormJS - The easiest and most powerful way to create forms and surveys.">
+		<meta name="author" content="Julien Loutre">
+		<link rel="shortcut icon" href="favicon.png">
+		
+		<title>Game-Framework - Device Tester</title>
+		
+		<link href="public/bootstrap/./dist/css/bootstrap.css" rel="stylesheet">
+<link href="public/examples/custom.css" rel="stylesheet">
+		<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/trivia/trivia.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/css/game-framework.less" />
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
+<script src="public/jquery/jquery.js"></script>
+<script src="public/bootstrap/./dist/js/bootstrap.js"></script>
+<script src="public/underscore/underscore-min.js"></script>
+<script src="public/json2/json2.js"></script>
+<script src="public/FormJS/core.js"></script>
+<script src="public/FormJS/modules/bootstrap.js"></script>
+<script src="public/FormJS/modules/accordion.js"></script>
+<script src="public/FormJS/modules/checkbox.js"></script>
+<script src="public/FormJS/modules/radio.js"></script>
+<script src="public/FormJS/modules/varchar.js"></script>
+<script src="public/countdown/countdown.js"></script>
+<script src="public/game-framework/core.js"></script>
+<script src="public/game-framework/games/trivia/trivia.js"></script>
+<script src="public/game-framework/plugins/fleetwit.js"></script>
+<script src="public/game-framework/displays/image.js"></script>
+<script src="public/jquery/jquery.js"></script>
+<script src="https://raw.github.com/less/less.js/master/dist/less-1.6.0.min.js"></script>
+		
+	</head>
+	<body>
+		
+		<div id="wrap">
+		
+			<!-- Fixed navbar -->
+			<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Game-Framework</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav">
+							<li class="active"><a href="index.html">Device Tester</a></li>
+							<li><a href="mailto:julien@twenty-six-medias.com">Contact</a></li>
+						</ul>
+					</div><!--/.nav-collapse -->
+				</div>
+			</div>
+		
+			<!-- Begin page content -->
+			<div class="container" style="padding-top: 80px;">
+				
+<div ng-app ng-controller="deviceCtrl">
+	<nav class="navbar navbar-default" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">{{device}}</a>
+		</div>
+	
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{device}} <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" ng-click="size('Acer Iconia Tab A100',800,1280)">Acer Iconia Tab A100</a></li>
+						<li><a href="#" ng-click="size('Acer Iconia Tab A101',600,1024)">Acer Iconia Tab A101</a></li>
+						<li><a href="#" ng-click="size('Acer Iconia Tab A200',800,1280)">Acer Iconia Tab A200</a></li>
+						<li><a href="#" ng-click="size('Acer Iconia Tab A500',648,1280)">Acer Iconia Tab A500</a></li>
+						<li><a href="#" ng-click="size('Acer Iconia Tab A502',800,1280)">Acer Iconia Tab A502</a></li>
+						<li><a href="#" ng-click="size('Ainol Novo 7 Elf 2',496,1024)">Ainol Novo 7 Elf 2</a></li>
+						<li><a href="#" ng-click="size('Apple iPad',768,1024)">Apple iPad</a></li>
+						<li><a href="#" ng-click="size('Apple iPad 2',768,1024)">Apple iPad 2</a></li>
+						<li><a href="#" ng-click="size('Apple iPad 3 (and 4)',768,1024)">Apple iPad 3 (and 4)</a></li>
+						<li><a href="#" ng-click="size('Apple iPad Mini',768,1024)">Apple iPad Mini</a></li>
+						<li><a href="#" ng-click="size('Apple iPhone 3G',320,480)">Apple iPhone 3G</a></li>
+						<li><a href="#" ng-click="size('Apple iPhone 3GS',320,480)">Apple iPhone 3GS</a></li>
+						<li><a href="#" ng-click="size('Apple iPhone 4',320,480)">Apple iPhone 4</a></li>
+						<li><a href="#" ng-click="size('Apple iPhone 4S',320,480)">Apple iPhone 4S</a></li>
+						<li><a href="#" ng-click="size('Apple iPhone 5',320,568)">Apple iPhone 5</a></li>
+						<li><a href="#" ng-click="size('Apple iPod Touch',320,480)">Apple iPod Touch</a></li>
+						<li><a href="#" ng-click="size('Archos 70b (it2)',600,1024)">Archos 70b (it2)</a></li>
+						<li><a href="#" ng-click="size('Archos 80G9',768,1024)">Archos 80G9</a></li>
+						<li><a href="#" ng-click="size('Arnova 7 G2',480,800)">Arnova 7 G2</a></li>
+						<li><a href="#" ng-click="size('Arnova 7FG3',640,1067)">Arnova 7FG3</a></li>
+						<li><a href="#" ng-click="size('Arnova 8C G3',800,1067)">Arnova 8C G3</a></li>
+						<li><a href="#" ng-click="size('Arnova 10b G3',600,1024)">Arnova 10b G3</a></li>
+						<li><a href="#" ng-click="size('ASUS Padfone',800,1128)">ASUS Padfone</a></li>
+						<li><a href="#" ng-click="size('ASUS Transformer Pad TF300T',800,1280)">ASUS Transformer Pad TF300T</a></li>
+						<li><a href="#" ng-click="size('ASUS Transformer TF101',800,1280)">ASUS Transformer TF101</a></li>
+						<li><a href="#" ng-click="size('BAUHN AMID-972XS',768,1024)">BAUHN AMID-972XS</a></li>
+						<li><a href="#" ng-click="size('BlackBerry 9520',345,691)">BlackBerry 9520</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Bold 9360',320,800)">BlackBerry Bold 9360</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Bold 9780',480,800)">BlackBerry Bold 9780</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Bold 9790',320,800)">BlackBerry Bold 9790</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Bold 9900',356,800)">BlackBerry Bold 9900</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Curve 9300',311,800)">BlackBerry Curve 9300</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Curve 9320',320,800)">BlackBerry Curve 9320</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Curve 9380',320,800)">BlackBerry Curve 9380</a></li>
+						<li><a href="#" ng-click="size('BlackBerry PlayBook',600,1024)">BlackBerry PlayBook</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Torch 9800',320,480)">BlackBerry Torch 9800</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Torch 9810',320,480)">BlackBerry Torch 9810</a></li>
+						<li><a href="#" ng-click="size('BlackBerry Z10',345,521)">BlackBerry Z10</a></li>
+						<li><a href="#" ng-click="size('Google Nexus 5',360,598)">Google Nexus 5</a></li>
+						<li><a href="#" ng-click="size('HP Touchpad',768,1024)">HP Touchpad</a></li>
+						<li><a href="#" ng-click="size('HP Veer',320,545)">HP Veer</a></li>
+						<li><a href="#" ng-click="size('HTC 7 Mozart',320,480)">HTC 7 Mozart</a></li>
+						<li><a href="#" ng-click="size('HTC 7 Trophy',320,480)">HTC 7 Trophy</a></li>
+						<li><a href="#" ng-click="size('HTC Desire',320,533)">HTC Desire</a></li>
+						<li><a href="#" ng-click="size('HTC Desire C',320,480)">HTC Desire C</a></li>
+						<li><a href="#" ng-click="size('HTC Desire HD',320,533)">HTC Desire HD</a></li>
+						<li><a href="#" ng-click="size('HTC Desire Z',480,800)">HTC Desire Z</a></li>
+						<li><a href="#" ng-click="size('HTC Evo 3D',540,960)">HTC Evo 3D</a></li>
+						<li><a href="#" ng-click="size('HTC Legend',320,480)">HTC Legend</a></li>
+						<li><a href="#" ng-click="size('HTC One S',360,640)">HTC One S</a></li>
+						<li><a href="#" ng-click="size('HTC One V',320,533)">HTC One V</a></li>
+						<li><a href="#" ng-click="size('HTC One XL',360,640)">HTC One XL</a></li>
+						<li><a href="#" ng-click="size('HTC Sensation XL',360,640)">HTC Sensation XL</a></li>
+						<li><a href="#" ng-click="size('HTC Titan 4G',320,480)">HTC Titan 4G</a></li>
+						<li><a href="#" ng-click="size('HTC Velocity 4G',360,640)">HTC Velocity 4G</a></li>
+						<li><a href="#" ng-click="size('HTC Wildfire S',320,480)">HTC Wildfire S</a></li>
+						<li><a href="#" ng-click="size('HTC Windows Phone 8X',320,480)">HTC Windows Phone 8X</a></li>
+						<li><a href="#" ng-click="size('Huawei U8650',320,480)">Huawei U8650</a></li>
+						<li><a href="#" ng-click="size('Kindle 3',600,800)">Kindle 3</a></li>
+						<li><a href="#" ng-click="size('Kindle Fire HD 7',533,801)">Kindle Fire HD 7</a></li>
+						<li><a href="#" ng-click="size('Kindle Fire HD 8.9',533,801)">Kindle Fire HD 8.9</a></li>
+						<li><a href="#" ng-click="size('Kindle Fire HDX 7',600,902)">Kindle Fire HDX 7"</a></li>
+						<li><a href="#" ng-click="size('Kindle Paperwhite',758,800)">Kindle Paperwhite</a></li>
+						<li><a href="#" ng-click="size('Kobo eReader Touch',600,800)">Kobo eReader Touch</a></li>
+						<li><a href="#" ng-click="size('LG Optimus 2X',320,533)">LG Optimus 2X</a></li>
+						<li><a href="#" ng-click="size('LG Optimus L3',320,427)">LG Optimus L3</a></li>
+						<li><a href="#" ng-click="size('LG Optimus Pad',768,1280)">LG Optimus Pad</a></li>
+						<li><a href="#" ng-click="size('LG Viewty KU990',240,400)">LG Viewty KU990</a></li>
+						<li><a href="#" ng-click="size('Microsoft Surface (RT)',768,1366)">Microsoft Surface (RT)</a></li>
+						<li><a href="#" ng-click="size('Motorola Defy',320,569)">Motorola Defy</a></li>
+						<li><a href="#" ng-click="size('Motorola Droid3',360,599)">Motorola Droid3</a></li>
+						<li><a href="#" ng-click="size('Motorola Droid Razr',360,640)">Motorola Droid Razr</a></li>
+						<li><a href="#" ng-click="size('Motorola Milestone',320,569)">Motorola Milestone</a></li>
+						<li><a href="#" ng-click="size('Motorola Razr HD 4G',360,598)">Motorola Razr HD 4G</a></li>
+						<li><a href="#" ng-click="size('Motorola Razr M 4G',360,598)">Motorola Razr M 4G</a></li>
+						<li><a href="#" ng-click="size('Motorola Xoom',800,1280)">Motorola Xoom</a></li>
+						<li><a href="#" ng-click="size('Motorola Xoom 2',800,1280)">Motorola Xoom 2</a></li>
+						<li><a href="#" ng-click="size('Nexus 4',384,598)">Nexus 4</a></li>
+						<li><a href="#" ng-click="size('Nexus 7',603,966)">Nexus 7</a></li>
+						<li><a href="#" ng-click="size('Nexus S',320,533)">Nexus S</a></li>
+						<li><a href="#" ng-click="size('Nokia 300',234,800)">Nokia 300</a></li>
+						<li><a href="#" ng-click="size('Nokia 500',360,640)">Nokia 500</a></li>
+						<li><a href="#" ng-click="size('Nokia 700',240,427)">Nokia 700</a></li>
+						<li><a href="#" ng-click="size('Nokia 2700',240,800)">Nokia 2700</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 520',320,480)">Nokia Lumia 520</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 610',320,480)">Nokia Lumia 610</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 710',320,480)">Nokia Lumia 710</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 800',320,480)">Nokia Lumia 800</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 820',320,480)">Nokia Lumia 820</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 900',320,480)">Nokia Lumia 900</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 920',320,480)">Nokia Lumia 920</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 1020',320,480)">Nokia Lumia 1020</a></li>
+						<li><a href="#" ng-click="size('Nokia Lumia 1520',320,480)">Nokia Lumia 1520</a></li>
+						<li><a href="#" ng-click="size('Nokia N95',240,800)">Nokia N95</a></li>
+						<li><a href="#" ng-click="size('Nokia N900',480,800)">Nokia N900</a></li>
+						<li><a href="#" ng-click="size('Panasonic Toughpad A1',768,1024)">Panasonic Toughpad A1</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Ace',320,480)">Samsung Galaxy Ace</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Ace 2',320,533)">Samsung Galaxy Ace 2</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Grand',480,800)">Samsung Galaxy Grand</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Note',400,640)">Samsung Galaxy Note</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Note 2',360,640)">Samsung Galaxy Note 2</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Note 10.1',800,1280)">Samsung Galaxy Note 10.1</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy S2',320,533)">Samsung Galaxy S2</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy S3',360,640)">Samsung Galaxy S3</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy S3 Mini',360,640)">Samsung Galaxy S3 Mini</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy S4',360,640)">Samsung Galaxy S4</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy S4 Mini',360,640)">Samsung Galaxy S4 Mini</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Tab 2 7.0',600,1024)">Samsung Galaxy Tab 2 7.0</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Tab 7',600,1024)">Samsung Galaxy Tab 7</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Tab 8.9',800,1280)">Samsung Galaxy Tab 8.9</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Tab 10.1',800,1280)">Samsung Galaxy Tab 10.1</a></li>
+						<li><a href="#" ng-click="size('Samsung Galaxy Tab 10.1',800,1280)">Samsung Galaxy Tab 10.1</a></li>
+						<li><a href="#" ng-click="size('Sony Xperia E Dual',320,480)">Sony Xperia E Dual</a></li>
+						<li><a href="#" ng-click="size('Tesco Hudl',600,799)">Tesco Hudl</a></li>
+						<li><a href="#" ng-click="size('Windows Surface Pro',1080,1920)">Windows Surface Pro</a></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{orientation}} <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li><a href="#" ng-click="orientation='Portrait'">Portrait</a></li>
+						<li><a href="#" ng-click="orientation='Landscape'">Landscape</a></li>
+					</ul>
+				</li>
+				<li><a href="#">{{orientation=='Portrait'?displaySize.width:displaySize.height}}x{{orientation=='Portrait'?displaySize.height:displaySize.width}}</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+	
+	<div class="device-preview" style="width: {{orientation=='Portrait'?displaySize.width:displaySize.height}}px; height: {{orientation=='Portrait'?displaySize.height:displaySize.width}}px;">
+		<table class="game-framework">
+			<tbody>
+				<tr>
+					<td class="header">
+						<img src="http://www.fleetwit.com/uploads/races/regular-c59d9edf-d77e-44ef-8bc9-967e6c0c5206.png" style="width:100%;" />
+					</td>
+				</tr>
+				<tr>
+					<td class="content">
+						<div class="game" id="game"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="footer">
+						<div id="game-footer"></div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+	
+	// Angular Device Testing
+	function deviceCtrl($scope) {
+		$scope.device = "Apple iPhone 4";
+		$scope.orientation = "Portrait";
+		$scope.displaySize = {
+			width:	320,
+			height:	480
+		};
+		$scope.size = function(name, w,h) {
+			$scope.device = name;
+			$scope.displaySize.width = w;
+			$scope.displaySize.height = h;
+		};
+	}
+	
+	var levels = [{
+		type:		"trivia",
+		title:		"Trivia",
+		label:		"Trivia question 1",
+		time:		180,
+		data:		{
+			type:		"radio",
+			list:		[{
+				label:	"A",
+				value:	"A"
+			},{
+				label:	"B",
+				value:	"B"
+			},{
+				label:	"C",
+				value:	"C"
+			}],
+			answer:		"A"
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
+		}
+	},{
+		type:		"trivia",
+		title:		"Another Trivia",
+		label:		"Complete: \"Hello ____\"",
+		time:		180,
+		data:		{
+			type:		"varchar",
+			answer:		"world"
+		},
+		display:	{
+			type:	"image",
+			image:	"http://images.nationalgeographic.com/wpf/media-live/photos/000/477/overrides/lyngen-alps-aurora-1-24_47737_600x450.jpg"
+		}
+	}];
+	
+	$(function() {
+		var game = new gameFramework($("#game"), []).build({
+			levels:		levels,
+			buttons:	$("#game-footer"),
+			onSubmit:	function(data, jform) {
+				
+			},
+			onError:	function(data, jform) {
+				
+			}
+		});
+		
+		game.start();
+	});
+</script>
+			</div>
+		</div>
+		
+		<div id="footer">
+			<div class="container">
+				<p class="text-muted">&copy; Fleetwit, 2014</p>
+			</div>
+		</div>
+		
+	</body>
+</html>

@@ -1,0 +1,50 @@
+table.game-framework {
+	width:		100%;
+	height:		100%;
+	border:		1px solid #ffcc00;
+}
+table.game-framework td {
+	padding:	0;
+	margin:		0;
+	vertical-align:	top;
+}
+table.game-framework .header {
+	height:		20px;
+}
+table.game-framework .content {
+	background-color:	#46B9A5;
+	height:				100%;
+	overflow:			auto;
+}
+table.game-framework .footer {
+	height:		26px;
+	background-color:	#EDEDED;
+}
+
+
+.device-preview {
+	/*border:		2px solid #333333;*/
+	margin:		0 auto;
+}
+
+.gf-label {
+	text-align:		center;
+	font-weight:	bold;
+	font-size:		16px;
+	margin-bottom:	6px;
+}
+
+#game .radio {
+	padding:		0;
+}
+#game .radio > input {
+	display:		none;
+}
+#game .radio > input + label {
+	display:		block;
+	width:			100%;
+	border:			1px solid #000000;
+}
+#game .radio > input[type="radio"]:checked + label {
+	border:			1px solid #ff0000;
+}

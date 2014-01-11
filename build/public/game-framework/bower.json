@@ -1,0 +1,19 @@
+{
+	"name": "game-framework",
+	"version": "1.0.0",
+	"main": [
+		"core.js",
+		"games/trivia/trivia.js",
+		"games/trivia/trivia.less",
+		"plugins/fleetwit.js",
+		"displays/image.js",
+		"css/game-framework.less"
+	],
+	"dependencies":	{
+		"jquery":		"latest",
+		"underscore":	"latest",
+		"json2":		"latest",
+		"FormJS":		"latest",
+		"countdown":	"latest"
+	}
+}
