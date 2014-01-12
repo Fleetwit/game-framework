@@ -1,3 +1,11 @@
+
+/* Media query based devices */
+@desktop:   ~"only screen and (min-width: 960px)";
+@tablet:    ~"only screen and (min-width: 720px) and (max-width: 959px)";
+@mobile:    ~"only screen and (max-width: 719px)";
+@mobile-landscape:    ~"only screen and (max-width: 719px) and (orientation : portrait)";
+
+
 .box-shadow (@x: 0px, @y: 3px, @blur: 5px, @color: #000000) {
 	-webkit-box-shadow: @x @y @blur @color;
 	-moz-box-shadow: @x @y @blur @color;
@@ -31,16 +39,47 @@
 	.box-shadow-inset(0, 1px, 0, lighten(@color, 20%));
 	.text-inset(#ffffff, rgba(0,0,0,0.4));
 	width:				100%;
-	padding:			8px;
 	text-align:			center;
-	font-size:			16px;
 	font-weight:		bold;
 	cursor:				pointer;
+	
+	@media @mobile {
+		padding:			8px;
+		font-size:			16px;
+	}
+	@media @tablet {
+		padding:			14px;
+		font-size:			24px;
+	}
+	@media @desktop {
+		padding:			20px;
+		font-size:			24px;
+	}
 }
 .button-active(@color: #7CC7EC) {
 	.gradient(bottom, darken(@color, 10%), darken(@color, 25%));
 	.box-shadow-inset(-1px, 2px, 3px, darken(@color, 40%));
 }
+
+.orientation-issue {
+	display:		none;
+	position:		absolute;
+	top:			0;
+	left:			0;
+	width:			100%
+	height:			100%;
+	background-color:	rgba(0,0,0,0.9);
+	background-position:	center center;
+	background-repeat:		no-repeat;
+	background-image:		url("images/orientation-issue.png");
+	@media @mobile-landscape {
+		display:	block;
+	}
+}
+
+
+
+
 
 /* Menu fix on the demo */
 .dropdown-menu {
@@ -113,6 +152,25 @@ table.game-framework {
 							height:			0;
 						}
 					}
+					.layer-hint {
+						background-color:	rgba(0,0,0,0.9);
+						z-index:			2000;
+						
+						.gf-bg {
+							cursor:			pointer;
+							width:			100%;
+							height:			100%;
+							text-align:		center;
+							vertical-align:	middle;
+							text-align:		center;
+							color:			#ffffff;
+							font-size:		16px;
+							font-weight:	bold;
+						}
+						.gf-footer {
+							height:			0;
+						}
+					}
 					.layer-game {
 						height:				100%;
 						width:				100%;
@@ -135,6 +193,9 @@ table.game-framework {
 							.form-group {
 								margin:		0; /* bootstrap form fix */
 							}
+						}
+						.gf-footer {
+							height:			0;
 						}
 					}
 				}
@@ -169,6 +230,9 @@ table.game-framework {
 	.gf-btn {
 		.button();
 	}
+	.gf-btn.gf-secondary {
+		.button(#87A34C);
+	}
 	
 	.radio {
 		padding:		0;
@@ -190,4 +254,8 @@ table.game-framework {
 .device-preview {
 	margin:		0 auto;
 	.box-shadow(0, 0, 5px);
+	
+	iframe {
+		border:		0;
+	}
 }

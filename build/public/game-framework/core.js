@@ -92,6 +92,9 @@
 		// Build the penalty layer
 		this.buildPenalty();
 		
+		// Build the penalty layer
+		this.buildPenalty();
+		
 		// Build the levels (game screens)
 		var levelNumber = 0;
 		_.each(this.options.levels, function(item) {
@@ -109,6 +112,12 @@
 				
 				// Set the game name
 				containers.layer.instructions.header.html("Level "+(levelNumber+1)+": "+item.title);
+				
+				// Set the game hint
+				if (!item.hint) {
+					item.hint = "You're on your own for this one!";
+				}
+				containers.layer.hint.bg.html(item.hint);
 				
 				// Create the object
 				var obj 	= {
@@ -222,6 +231,9 @@
 			// Display the instructions
 			this.levels[levelNumber].containers.layer.instructions.container.show();
 			
+			// Hide the hint
+			this.levels[levelNumber].containers.layer.hint.container.hide();
+			
 			// Build the level
 			this.levels[levelNumber].instance.build(this.levels[levelNumber].containers);
 			
@@ -259,7 +271,7 @@
 		
 	};
 	
-	// Create a form line (DOM), based on the theme (this.theme)
+	// Create a level container (DOM)
 	gameFramework.prototype.createLevelContainer = function(data) {
 		var scope 	= this;
 		var container 	= window.gfFactory.dom("div", this.container);
@@ -268,39 +280,84 @@
 				layers.addClass("layers");
 				
 				
-				
+				// Instructions
 				var instructionLayer	= window.gfFactory.dom("table", layers);
 					instructionLayer.addClass("layer").addClass("layer-instructions");
-					var tbody 		= window.gfFactory.dom("tbody", instructionLayer);
+					var tbody 			= window.gfFactory.dom("tbody", instructionLayer);
 						var tr1 		= window.gfFactory.dom("tr", tbody);
-							var header 		= window.gfFactory.dom("td", tr1);
+							var header 	= window.gfFactory.dom("td", tr1);
 								header.addClass("gf-header");
 						var tr2 		= window.gfFactory.dom("tr", tbody);
-							var bg 		= window.gfFactory.dom("td", tr2);
-								bg.addClass("gf-bg");
+							var instructionBg 		= window.gfFactory.dom("td", tr2);
+								instructionBg.addClass("gf-bg");
 						var tr3 		= window.gfFactory.dom("tr", tbody);
-							var footer 		= window.gfFactory.dom("td", tr3);
+							var footer 	= window.gfFactory.dom("td", tr3);
 								footer.addClass("gf-footer");
 								// Build the instruction button
 								var instructionButton = window.gfFactory.dom("div", footer);
 									instructionButton.addClass("gf-btn");
-									instructionButton.html("Play");
-									instructionButton.add(bg).click(function() {
+									instructionButton.html("Got it");
+									instructionButton.add(instructionBg).click(function() {
 										scope.hideInstructions();
 									});
 				
+				
+				// Hint
+				var hintLayer			= window.gfFactory.dom("table", layers);
+					hintLayer.addClass("layer").addClass("layer-hint");
+					var tbody 			= window.gfFactory.dom("tbody", hintLayer);
+						var tr1 		= window.gfFactory.dom("tr", tbody);
+							var hintBg 		= window.gfFactory.dom("td", tr1);
+								hintBg.addClass("gf-bg");
+						var tr2 		= window.gfFactory.dom("tr", tbody);
+							var footer 	= window.gfFactory.dom("td", tr2);
+								footer.addClass("gf-footer");
+								// Build the instruction button
+								var hintButton = window.gfFactory.dom("div", footer);
+									hintButton.addClass("gf-btn");
+									hintButton.html("Got it");
+									hintButton.add(hintBg).click(function() {
+										scope.hideHint();
+									});
+				
+				
+				// Game
 				var gameLayer	= window.gfFactory.dom("table", layers);
 					gameLayer.addClass("layer").addClass("layer-game");
 					var tbody 		= window.gfFactory.dom("tbody", gameLayer);
 						var tr1 		= window.gfFactory.dom("tr", tbody);
 							var display 	= window.gfFactory.dom("td", tr1);
 								display.addClass("gf-display");
+								display.attr('colspan', 2);
 						var tr2 		= window.gfFactory.dom("tr", tbody);
 							var label 		= window.gfFactory.dom("td", tr2);
 								label.addClass("gf-label");
+								label.attr('colspan', 2);
 						var tr3 		= window.gfFactory.dom("tr", tbody);
 							var game 		= window.gfFactory.dom("td", tr3);
 								game.addClass("gf-game");
+								game.attr('colspan', 2);
+						var tr4 		= window.gfFactory.dom("tr", tbody);
+							var td1 		= window.gfFactory.dom("td", tr4);
+								td1.addClass("gf-footer");
+								td1.css("width", "50%");
+								// Build the instruction button
+								var btn1 = window.gfFactory.dom("div", td1);
+									btn1.addClass("gf-btn").addClass("gf-secondary").css("border-right", 0);
+									btn1.html("How to play");
+									btn1.click(function() {
+										scope.showInstructions();
+									});
+							var td2 		= window.gfFactory.dom("td", tr4);
+								td2.addClass("gf-footer");
+								td2.css("width", "50%");
+								// Build the hint button
+								var btn2 = window.gfFactory.dom("div", td2);
+									btn2.addClass("gf-btn").addClass("gf-secondary");
+									btn2.html("Hint");
+									btn2.click(function() {
+										scope.showHint();
+									});
 		
 		// Return the individual games (DOM nodes)
 		return {
@@ -309,8 +366,12 @@
 				game:			gameLayer,
 				instructions:	{
 					container:	instructionLayer,
-					bg:			bg,
+					bg:			instructionBg,
 					header:		header
+				},
+				hint:			{
+					container:	hintLayer,
+					bg:			hintBg
 				}
 			},
 			label:		label,
@@ -376,22 +437,61 @@
 		return output;
 	};
 	
-	// Start the game
+	
+	
+	
+	
+	
+	
+	
+	
+	// Show the instructions
+	gameFramework.prototype.showInstructions = function() {
+		if (this.currentLevel !== false) {
+			// Hide the instructions
+			this.levels[this.currentLevel].containers.layer.instructions.container.fadeIn();
+			this.levels[this.currentLevel].containers.layer.game.fadeIn();
+		}
+	};
+	// Hide the instructions
 	gameFramework.prototype.hideInstructions = function() {
 		if (this.currentLevel !== false) {
 			// Hide the instructions
 			this.levels[this.currentLevel].containers.layer.instructions.container.fadeOut();
 			this.levels[this.currentLevel].containers.layer.game.fadeIn();
 			
-			// If there is a display, init the display
-			if (this.levels[this.currentLevel].display) {
-				this.levels[this.currentLevel].display.init();
+			if (!this.levels[this.currentLevel].init) {
+				// If there is a display, init the display
+				if (this.levels[this.currentLevel].display) {
+					this.levels[this.currentLevel].display.init();
+				}
+				
+				// Init the game
+				this.levels[this.currentLevel].instance.init();
+				
+				this.levels[this.currentLevel].init = true;
 			}
 			
-			// Init the game
-			this.levels[this.currentLevel].instance.init();
 		}
 	};
+	
+	// Show the hint
+	gameFramework.prototype.showHint = function() {
+		if (this.currentLevel !== false) {
+			// Hide the instructions
+			this.levels[this.currentLevel].containers.layer.hint.container.fadeIn();
+		}
+	};
+	// Hide the hint
+	gameFramework.prototype.hideHint = function() {
+		if (this.currentLevel !== false) {
+			// Hide the instructions
+			this.levels[this.currentLevel].containers.layer.hint.container.fadeOut();
+		}
+	};
+	
+	
+	
 	
 	// Stringify the form data in JSON.
 	// Useful to save the levels in a database for example

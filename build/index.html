@@ -211,25 +211,7 @@
 	</nav>
 	
 	<div class="device-preview" style="width: {{orientation=='Portrait'?displaySize.width:displaySize.height}}px; height: {{orientation=='Portrait'?displaySize.height:displaySize.width}}px;">
-		<table class="game-framework">
-			<tbody>
-				<tr>
-					<td class="header">
-						<img src="http://www.fleetwit.com/uploads/races/regular-c59d9edf-d77e-44ef-8bc9-967e6c0c5206.png" style="width:100%;" />
-					</td>
-				</tr>
-				<tr>
-					<td class="content">
-						<div class="game" id="game"></div>
-					</td>
-				</tr>
-				<tr>
-					<td class="footer">
-						<div id="game-footer"></div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<iframe src="demo.html" style="width: {{orientation=='Portrait'?displaySize.width:displaySize.height}}px; height: {{orientation=='Portrait'?displaySize.height:displaySize.width}}px;"></iframe>
 	</div>
 </div>
 
@@ -249,59 +231,6 @@
 			$scope.displaySize.height = h;
 		};
 	}
-	
-	var levels = [{
-		type:		"trivia",
-		title:		"Trivia",
-		label:		"Trivia question 1",
-		time:		180,
-		data:		{
-			type:		"radio",
-			list:		[{
-				label:	"A",
-				value:	"A"
-			},{
-				label:	"B",
-				value:	"B"
-			},{
-				label:	"C",
-				value:	"C"
-			}],
-			answer:		"A"
-		},
-		display:	{
-			type:	"image",
-			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
-		}
-	},{
-		type:		"trivia",
-		title:		"Another Trivia",
-		label:		"Complete: \"Hello ____\"",
-		time:		180,
-		data:		{
-			type:		"varchar",
-			answer:		"world"
-		},
-		display:	{
-			type:	"image",
-			image:	"http://images.nationalgeographic.com/wpf/media-live/photos/000/477/overrides/lyngen-alps-aurora-1-24_47737_600x450.jpg"
-		}
-	}];
-	
-	$(function() {
-		var game = new gameFramework($("#game"), []).build({
-			levels:		levels,
-			buttons:	$("#game-footer"),
-			onSubmit:	function(data, jform) {
-				
-			},
-			onError:	function(data, jform) {
-				
-			}
-		});
-		
-		game.start();
-	});
 </script>
 			</div>
 		</div>

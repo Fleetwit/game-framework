@@ -4,6 +4,11 @@
 		"index.html": {
 			"title":	"Game-Framework - Device Tester",
 			"filename":	"index.html"
+		},
+		"demo.html": {
+			"title":	"Game-Framework - Demo",
+			"filename":	"demo.html",
+			"template":	"app.html"
 		}
 	},
 	"template":		"main.html",

@@ -129,7 +129,13 @@ builder.prototype.buildPage = function(page, callback) {
 					if (relativepath != "") {
 						relativepath += "/";
 					}
-					scope.file.write(filename, scope.templates[pageConf.template].render(_.extend(p.fileData,{
+					if (p.fileData.template) {
+						var twigTemplate = scope.templates[p.fileData.template];
+					} else {
+						var twigTemplate = scope.templates[pageConf.template];
+					}
+					
+					scope.file.write(filename, twigTemplate.render(_.extend(p.fileData,{
 						page:			pageConf,
 						file:			p.fileData.filename,
 						relativepath:	relativepath,
