@@ -18,6 +18,7 @@
 		"examples",
 		"game-framework",
 		"AngularJS",
-		"lesscss"
+		"lesscss",
+		"stopwatch"
 	]
 }

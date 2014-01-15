@@ -48,11 +48,20 @@
 	
 	
 	var gameFramework = function(container, plugins) {
-		this.levels		= [];
-		this.data		= {};
-		this.errors		= [];
-		this.formErrors = [];
+		this.container 		= container;
+		this.levels			= [];
+		this.data			= {};
+		this.errors			= [];
+		this.formErrors 	= [];
 		this.slideDuration	= 500;
+		this.startPoints	= 1000;
+		this.lossPerError	= this.startPoints/10;
+		this.scoreScreen	= this.container.find(".gf-levelScore");
+		
+		this.timer 			= {
+			global:		new window.stopwatch(),
+			level:		new window.stopwatch()
+		};
 		
 		if (plugins) {
 			this.use		= plugins;
@@ -60,7 +69,6 @@
 			this.use		= [];
 		}
 		
-		this.container 	= container;
 		
 		var scope = this;
 		
@@ -76,6 +84,7 @@
 		});
 		
 	};
+	
 	// Build the form
 	gameFramework.prototype.build = function(options) {
 		
@@ -84,16 +93,33 @@
 		this.options 	= _.extend({
 			form:		{},
 			submit:		$(),
-			onSubmit:	function() {},
-			onError:	function() {},
-			onInit:		function() {}
+			onInit:		function() {
+				console.info("GF Init");
+			},
+			onLevelUp:	function(data) {
+				console.info("GF Level Up");
+			},
+			onFinish:	function() {
+				console.info("GF Finish");
+			}
 		}, options);
 		
-		// Build the penalty layer
-		this.buildPenalty();
+		if (!this.options.$scope) {
+			console.log("AngularJS $scope not defined!");
+			return false;
+		}
+		
 		
 		// Build the penalty layer
 		this.buildPenalty();
+		
+		this.options.$scope.gf 					= {};
+		this.options.$scope.score 				= {
+			current:		0,
+			total:			0
+		};
+		this.options.$scope.gf.levels 			= [];
+		this.options.$scope.gf.currentLevel 	= 1;
 		
 		// Build the levels (game screens)
 		var levelNumber = 0;
@@ -121,13 +147,22 @@
 				
 				// Create the object
 				var obj 	= {
-					level:		levelNumber,
-					factory:	window.gfFactory.games[item.type],
-					instance:	instance,
-					data:		item,
-					containers:	containers,
-					errors:		[]
+					level:			levelNumber,
+					factory:		window.gfFactory.games[item.type],
+					instance:		instance,
+					data:			_.extend({time: 180},item),
+					containers:		containers,
+					errors:			[],
+					lossPerError:	(scope.startPoints/item.errors) || scope.lossPerError,
+					points:			scope.startPoints
 				};
+				
+				// Angular level
+				scope.options.$scope.gf.levels.push({
+					level:	levelNumber,
+					passed:	false,
+					current:false
+				});
 				
 				
 				// Manage the display
@@ -148,14 +183,21 @@
 				
 				// Set the callbacks
 				// Save the errors, to find trends in user inputs
-				instance.saveError = function(error) {
+				instance.onError = function(error) {
 					obj.errors.push(error);
+					obj.points -= obj.lossPerError;
+					obj.points	= Math.max(obj.points, 0);
+					if (obj.points == 0) {
+						//@TODO: display loss animation
+						instance.end();
+					}
 				}
 				instance.end = function(error) {
 					console.log("level ended");
 					
 					// Hide the level
 					// Save it as the current screen
+					// It will be used by launch()
 					scope.currentScreen = {
 						container:	containers.container,
 						onEnd:		function() {
@@ -172,13 +214,24 @@
 						}
 					};
 					
+					// Show the score screen
+					scope.showScoreScreen(3, function() {
+						// Level Up callback
+						scope.options.onLevelUp(scope, obj);
+						
+						// Launch the next level
+						if (obj.level+1 < scope.levels.length) {
+							scope.launch(obj.level+1);
+						} else {
+							console.log("Game completed");
+							// Finish callback
+							scope.options.onFinish(scope);
+						}
+					});
+					scope.slideScreen(scope.currentScreen.container, scope.scoreScreen, function() {
+						
+					});
 					
-					// Launch the next level
-					if (obj.level+1 < scope.levels.length) {
-						scope.launch(obj.level+1);
-					} else {
-						console.log("Game completed");
-					}
 				}
 				
 				// Set the label
@@ -199,7 +252,8 @@
 			return this;
 		});
 		
-		
+		// Update the AngularJS object
+		scope.options.$scope.$apply();
 		
 		scope.options.onInit(this);
 		
@@ -208,6 +262,7 @@
 	
 	// Start the game
 	gameFramework.prototype.start = function(data) {
+		this.timer.global.start();
 		this.launch(0);
 	};
 	
@@ -225,6 +280,17 @@
 				}
 			}
 			
+			// Reset the level timer
+			this.timer.level = new window.stopwatch();
+			this.timer.level.start();
+			this.timer.level.addCue(this.levels[levelNumber].data.time, function() {
+				// Timeout, no points!
+				scope.levels[levelNumber].points = 0;
+				// End the level
+				scope.levels[levelNumber].instance.end();
+			});
+			this.levels[levelNumber].started	= new Date().getTime();
+			
 			// Display the level container
 			this.levels[levelNumber].containers.container.show();
 			
@@ -239,10 +305,36 @@
 			
 			// Trigger the screen transition
 			if (this.currentScreen) {
-				this.slideScreen(this.currentScreen.container, this.levels[levelNumber].containers.container, function() {
+				this.slideScreen(this.scoreScreen, this.levels[levelNumber].containers.container, function() {
 					scope.currentScreen.onEnd();
 				});
 			}
+			
+			// Manage AngularJS
+			this.options.$scope.gf.currentLevel 	= levelNumber+1;
+			_.each(scope.options.$scope.gf.levels, function(level) {
+				if (level.level < levelNumber) {
+					level.passed 	= true;
+					level.current 	= false;
+				}
+				if (level.level == levelNumber) {
+					level.passed 	= false;
+					level.current 	= true;
+				}
+				if (level.level > levelNumber) {
+					level.passed 	= false;
+					level.current 	= false;
+				}
+			});
+			clearInterval(this.levelInterval);
+			this.levelInterval = setInterval(function() {
+				scope.options.$scope.gf.levelTimer = scope.timer.level.current();
+				scope.options.$scope.$apply();
+			}, 100);
+			
+			
+			// Update the AngularJS object
+			this.options.$scope.$apply();
 			
 		} else {
 			this.currentLevel = false;
@@ -401,7 +493,7 @@
 	};
 	
 	// Display the penalty screen
-	gameFramework.prototype.showPenalty = function(sec) {
+	gameFramework.prototype.showPenalty = function(sec, cb) {
 		if (!sec) {
 			var sec = 3;
 		}
@@ -413,7 +505,29 @@
 			},
 			end:	function() {
 				countdown.stop();
-				scope.penaltyScreen.fadeOut();
+				scope.penaltyScreen.fadeOut(function() {
+					cb();
+				});
+			}
+		});
+		countdown.set(sec);
+		countdown.start();
+	};
+	
+	// Display the penalty screen
+	gameFramework.prototype.showScoreScreen = function(sec, cb) {
+		if (!sec) {
+			var sec = 3;
+		}
+		var scope 	= this;
+		this.scoreScreen.show();
+		var countdown 	= new window.gf_countdown({
+			update:	function(t) {
+				scope.scoreScreen.find(".gf-timer").html(t);
+			},
+			end:	function() {
+				countdown.stop();
+				cb();
 			}
 		});
 		countdown.set(sec);

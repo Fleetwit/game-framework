@@ -11,7 +11,7 @@
 			onClick:	function() {
 				scope.formjs.submit();
 			}
-		}];	*/	
+		}];	*/
 	}
 	// Build the component
 	game.prototype.build = function(line) {
@@ -44,9 +44,13 @@
 				if (data.question == scope.data.data.answer) {
 					scope.end();
 				} else {
-					scope.saveError(data.question);
+					// Remove the focus! (bugfix!)
+					$("input").blur();
 					line.container.addClass("has-error");
-					scope.gf.showPenalty();
+					scope.gf.showPenalty(3, function() {
+						// Register the error after the penalty
+						scope.onError(data.question);
+					});
 				}
 				
 			},

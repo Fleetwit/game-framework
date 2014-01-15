@@ -1,12 +1,20 @@
 <div class="orientation-issue"></div>
 
-<table class="game-framework">
+<table class="game-framework" ng-app="gameFrameworkApp" ng-controller="gameCtrl">
 	<tbody>
 		<tr>
-			<td>Level 1</td>
-			<td>progress</td>
-			<td>Score</td>
-			<td>Time</td>
+			<td style="width: 25%">
+				<table class="gf-progress">
+					<tbody>
+						<tr>
+							<td ng-repeat="level in gf.levels" style="width: {{100/gf.levels.length}}%;" ng-class="{passed:level.passed, current:level.current}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+			<td>Level {{gf.currentLevel}}</td>
+			<td>{{gf.currentScore}} Points</td>
+			<td style="text-align:right;">{{gf.levelTimer|format_time}}</td>
 		</tr>
 		<tr>
 			<td colspan="4" class="header">
@@ -15,7 +23,21 @@
 		</tr>
 		<tr>
 			<td colspan="4" class="content">
-				<div class="game" id="game"></div>
+				<div class="game" id="game">
+					<table class="screen gf-levelScore" style="display: none;">
+						<tbody>
+							<tr>
+								<td>
+									<div class="gf-label">
+										This level: {{gf.score.current}}<br />
+										Total: 		{{gf.score.total}}
+									</div>
+									<div class="gf-timer">3</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</td>
 		</tr>
 		<tr>
@@ -28,12 +50,14 @@
 
 <script type="text/javascript">
 	
+	// Define the levels
 	var levels = [{
 		type:		"trivia",
 		title:		"Trivia",
 		label:		"Trivia question 1",
-		time:		180,
+		time:		60,
 		hint:		"This is a cool hint!",
+		errors:		2,
 		data:		{
 			type:		"radio",
 			list:		[{
@@ -56,7 +80,7 @@
 		type:		"trivia",
 		title:		"Another Trivia",
 		label:		"Complete: \"Hello ____\"",
-		time:		180,
+		time:		60,
 		data:		{
 			type:		"varchar",
 			answer:		"world"
@@ -65,20 +89,68 @@
 			type:	"image",
 			image:	"http://images.nationalgeographic.com/wpf/media-live/photos/000/477/overrides/lyngen-alps-aurora-1-24_47737_600x450.jpg"
 		}
+	},{
+		type:		"trivia",
+		title:		"Trivia",
+		label:		"Trivia question 3",
+		time:		180,
+		hint:		"This is a cool hint!",
+		data:		{
+			type:		"radio",
+			list:		[{
+				label:	"A",
+				value:	"A"
+			},{
+				label:	"B",
+				value:	"B"
+			},{
+				label:	"C",
+				value:	"C"
+			}],
+			answer:		"C"
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
+		}
 	}];
 	
+	
+	// Define the angular app
+	angular.module('gameFrameworkApp', []).controller('gameCtrl', function($scope) {
+		$(function() {
+			var game = new gameFramework($("#game"), []).build({
+				$scope:		$scope,
+				levels:		levels,
+				buttons:	$("#game-footer"),
+				onInit:		function(gf) {
+					console.info("onInit()");
+				},
+				onLevelUp:	function(gf, levelData) {
+					console.info("onLevelUp()", levelData);
+				},
+				onFinish:	function(gf) {
+					console.info("onFinish()");
+				}
+			});
+			
+			game.start();
+		})
+	}).filter('format_time', function() {
+		return function(time) {
+			var seconds = time/1000;
+			var hours = Math.floor(seconds / 3600);
+			seconds = seconds - hours * 3600;
+			var minutes = (Math.floor(seconds/60) < 10) ? "0" + Math.floor(seconds/60) : Math.floor(seconds/60);
+			var seconds = (seconds % 60 > 9) ? seconds % 60 : "0" + seconds % 60;
+			seconds = Math.round(seconds);
+			seconds = (seconds > 9) ? seconds : "0" + seconds;
+			var timestring = minutes+":"+seconds;
+			return timestring;
+		};
+	});
+	
 	$(function() {
-		var game = new gameFramework($("#game"), []).build({
-			levels:		levels,
-			buttons:	$("#game-footer"),
-			onSubmit:	function(data, jform) {
-				
-			},
-			onError:	function(data, jform) {
-				
-			}
-		});
 		
-		game.start();
 	});
 </script>

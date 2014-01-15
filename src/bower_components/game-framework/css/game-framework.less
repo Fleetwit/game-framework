@@ -91,10 +91,38 @@
 table.game-framework {
 	width:		100%;
 	height:		100%;
+	
 	td {
 		padding:	0;
 		margin:		0;
 		vertical-align:	top;
+	}
+	.gf-progress {
+		width:		100%;
+		height:		100%;
+		td {
+			@color:		#cccccc;
+			.gradient(top, lighten(@color, 10%), darken(@color, 10%));
+			border:				1px solid darken(@color, 30%);
+			.box-shadow-inset(0, 1px, 0, lighten(@color, 20%));
+			.text-inset(#ffffff, rgba(0,0,0,0.4));
+			text-align:			center;
+			font-weight:		bold;
+			cursor:				pointer;
+			width:				20px;
+			&.passed {
+				@color:		#84C840;
+				.gradient(top, lighten(@color, 10%), darken(@color, 10%));
+				border:				1px solid darken(@color, 30%);
+				.box-shadow-inset(0, 1px, 0, lighten(@color, 20%));
+			}
+			&.current {
+				@color:		#18BAEF;
+				.gradient(top, lighten(@color, 10%), darken(@color, 10%));
+				border:				1px solid darken(@color, 30%);
+				.box-shadow-inset(0, 1px, 0, lighten(@color, 20%));
+			}
+		}
 	}
 	.header {
 		height:		20px;
@@ -200,7 +228,7 @@ table.game-framework {
 					}
 				}
 			}
-			.screen.gf-penalty {
+			.screen.gf-penalty,.screen.gf-levelScore {
 				background-color:	rgba(0,0,0,0.9);
 				z-index:			3000;
 				
