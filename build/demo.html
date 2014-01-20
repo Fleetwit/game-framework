@@ -13,6 +13,7 @@
 		<link href="public/bootstrap/./dist/css/bootstrap.css" rel="stylesheet">
 <link href="public/examples/custom.css" rel="stylesheet">
 		<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/trivia/trivia.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/scramble/scramble.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/css/game-framework.less" />
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
 <script src="public/jquery/jquery.js"></script>
@@ -29,6 +30,7 @@
 <script src="public/screenjs/screenjs.js"></script>
 <script src="public/game-framework/core.js"></script>
 <script src="public/game-framework/games/trivia/trivia.js"></script>
+<script src="public/game-framework/games/scramble/scramble.js"></script>
 <script src="public/game-framework/plugins/fleetwit.js"></script>
 <script src="public/game-framework/displays/image.js"></script>
 <script src="public/jquery/jquery.js"></script>
@@ -121,6 +123,18 @@
 	
 	// Define the levels
 	var levels = [{
+		type:		"scramble",
+		title:		"Scrambled Word",
+		label:		"The name of our company",
+		time:		60,
+		data:		{
+			word:		"fleetwit"
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
+		}
+	},{
 		type:		"trivia",
 		title:		"Trivia",
 		label:		"Trivia question 1",

@@ -5,6 +5,8 @@
 		"core.js",
 		"games/trivia/trivia.js",
 		"games/trivia/trivia.less",
+		"games/scramble/scramble.js",
+		"games/scramble/scramble.less",
 		"plugins/fleetwit.js",
 		"displays/image.js",
 		"css/game-framework.less"
