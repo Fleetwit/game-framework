@@ -14,6 +14,7 @@
 		"underscore":	"latest",
 		"json2":		"latest",
 		"FormJS":		"latest",
-		"countdown":	"latest"
+		"countdown":	"latest",
+		"screenjs":		"latest"
 	}
 }

@@ -56,7 +56,8 @@
 		this.slideDuration	= 500;
 		this.startPoints	= 1000;
 		this.lossPerError	= this.startPoints/10;
-		this.scoreScreen	= this.container.find(".gf-levelScore");
+		
+		this.screens		= new window.screenjs(this.container);
 		
 		this.timer 			= {
 			global:		new window.stopwatch(),
@@ -114,7 +115,7 @@
 		this.buildPenalty();
 		
 		this.options.$scope.gf 					= {};
-		this.options.$scope.score 				= {
+		this.options.$scope.gf.score 				= {
 			current:		0,
 			total:			0
 		};
@@ -195,42 +196,54 @@
 				instance.end = function(error) {
 					console.log("level ended");
 					
-					// Hide the level
-					// Save it as the current screen
-					// It will be used by launch()
-					scope.currentScreen = {
-						container:	containers.container,
-						onEnd:		function() {
-							// Call the hide method on the game
-							instance.hide();
+					// Save the end time
+					obj.ended = new Date().getTime();
+					
+					// Stop the level's timeout timer
+					scope.timer.level.reset();
+					scope.timer.level.pause();
+					
+					// Update AngularJS
+					console.log("error", obj.errors, obj.points);
+					scope.options.$scope.gf.score.current 	= obj.points;
+					scope.options.$scope.gf.score.total 	+= obj.points;
+					scope.options.$scope.$apply();
+					
+					
+					// Show the level screen
+					scope.screens.show('level-score');
+					
+					// Set the countdown
+					var countdown 	= new window.gf_countdown({
+						update:	function(t) {
+							scope.screens.get('level-score').find(".gf-timer").html(t);
+						},
+						end:	function() {
+							// Stop the countdown
+							countdown.stop();
 							
-							// Hide the buttons
-							if (obj.buttons) {
-								var btn;
-								for (btn in obj.buttons) {
-									obj.buttons[btn].hide();
-								}
+							// Level Up callback
+							scope.options.onLevelUp(scope, obj);
+							
+							// Launch the next level
+							if (obj.level+1 < scope.levels.length) {
+								scope.launch(obj.level+1);
+							} else {
+								console.log("Game completed");
+								
+								// Stop the global timer
+								scope.timer.global.pause();
+								
+								// Finish callback
+								scope.options.onFinish(scope, scope.timer.global.current());
+								
+								// Show the survey screen
+								scope.screens.show("survey");
 							}
 						}
-					};
-					
-					// Show the score screen
-					scope.showScoreScreen(3, function() {
-						// Level Up callback
-						scope.options.onLevelUp(scope, obj);
-						
-						// Launch the next level
-						if (obj.level+1 < scope.levels.length) {
-							scope.launch(obj.level+1);
-						} else {
-							console.log("Game completed");
-							// Finish callback
-							scope.options.onFinish(scope);
-						}
 					});
-					scope.slideScreen(scope.currentScreen.container, scope.scoreScreen, function() {
-						
-					});
+					countdown.set(3);
+					countdown.start();
 					
 				}
 				
@@ -238,7 +251,8 @@
 				containers.label.html(item.label);
 				
 				// Hide the container
-				containers.container.hide();
+				console.log("containers.container",containers.container);
+				obj.screenid = scope.screens.add(containers.container);
 				
 				// Hide the game within the container
 				containers.layer.game.hide();
@@ -282,13 +296,16 @@
 			
 			// Reset the level timer
 			this.timer.level = new window.stopwatch();
+			// Start the timer
 			this.timer.level.start();
+			// Add a timeout at 180sec by default, else level's allowed time.
 			this.timer.level.addCue(this.levels[levelNumber].data.time, function() {
 				// Timeout, no points!
 				scope.levels[levelNumber].points = 0;
 				// End the level
 				scope.levels[levelNumber].instance.end();
 			});
+			// Save the time at which it was started
 			this.levels[levelNumber].started	= new Date().getTime();
 			
 			// Display the level container
@@ -304,11 +321,12 @@
 			this.levels[levelNumber].instance.build(this.levels[levelNumber].containers);
 			
 			// Trigger the screen transition
-			if (this.currentScreen) {
+			this.screens.show(this.levels[levelNumber].screenid);
+			/*if (this.currentScreen) {
 				this.slideScreen(this.scoreScreen, this.levels[levelNumber].containers.container, function() {
 					scope.currentScreen.onEnd();
 				});
-			}
+			}*/
 			
 			// Manage AngularJS
 			this.options.$scope.gf.currentLevel 	= levelNumber+1;
@@ -328,7 +346,8 @@
 			});
 			clearInterval(this.levelInterval);
 			this.levelInterval = setInterval(function() {
-				scope.options.$scope.gf.levelTimer = scope.timer.level.current();
+				scope.options.$scope.gf.levelTimer 		= scope.timer.level.current();
+				scope.options.$scope.gf.globalTimer 	= scope.timer.global.current();
 				scope.options.$scope.$apply();
 			}, 100);
 			

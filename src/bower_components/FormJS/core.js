@@ -138,7 +138,8 @@
 			submit:		$(),
 			onSubmit:	function() {},
 			onError:	function() {},
-			onInit:		function() {}
+			onInit:		function() {},
+			onChange:	function() {}
 		}, options);
 		
 		var counter = 0;

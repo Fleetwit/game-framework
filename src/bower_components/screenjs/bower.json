@@ -1,0 +1,12 @@
+{
+	"name": "screenjs",
+	"version": "1.0.0",
+	"main": [
+		"screenjs.js"
+	],
+	"dependencies":	{
+		"jquery":		"latest",
+		"underscore":	"latest",
+		"json2":		"latest"
+	}
+}
