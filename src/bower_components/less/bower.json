@@ -2,6 +2,6 @@
 	"name": "lesscss",
 	"version": "1.6.0",
 	"main": [
-		"https://raw.github.com/less/less.js/master/dist/less-1.6.0.min.js"
+		"http://www.fleetwit.com/system/libs/clientside/less/less-1.4.1.min.js"
 	]
 }

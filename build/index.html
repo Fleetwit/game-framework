@@ -12,30 +12,10 @@
 		
 		<link href="public/bootstrap/./dist/css/bootstrap.css" rel="stylesheet">
 <link href="public/examples/custom.css" rel="stylesheet">
-		<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/trivia/trivia.less" />
-<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/scramble/scramble.less" />
-<link rel="stylesheet/less" type="text/css" href="public/game-framework/css/game-framework.less" />
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
-<script src="public/jquery/jquery.js"></script>
+		
+		<script src="public/jquery/jquery.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
 <script src="public/bootstrap/./dist/js/bootstrap.js"></script>
-<script src="public/underscore/underscore-min.js"></script>
-<script src="public/json2/json2.js"></script>
-<script src="public/FormJS/core.js"></script>
-<script src="public/FormJS/modules/bootstrap.js"></script>
-<script src="public/FormJS/modules/accordion.js"></script>
-<script src="public/FormJS/modules/checkbox.js"></script>
-<script src="public/FormJS/modules/radio.js"></script>
-<script src="public/FormJS/modules/varchar.js"></script>
-<script src="public/countdown/countdown.js"></script>
-<script src="public/screenjs/screenjs.js"></script>
-<script src="public/game-framework/core.js"></script>
-<script src="public/game-framework/games/trivia/trivia.js"></script>
-<script src="public/game-framework/games/scramble/scramble.js"></script>
-<script src="public/game-framework/plugins/fleetwit.js"></script>
-<script src="public/game-framework/displays/image.js"></script>
-<script src="public/jquery/jquery.js"></script>
-<script src="https://raw.github.com/less/less.js/master/dist/less-1.6.0.min.js"></script>
-<script src="public/stopwatch/stopwatch.js"></script>
 		
 	</head>
 	<body>
@@ -65,7 +45,24 @@
 		
 			<!-- Begin page content -->
 			<div class="container" style="padding-top: 80px;">
-				
+				<style type="text/css">
+	.device-preview {
+		margin:		0 auto;
+		-webkit-box-shadow: 0 0 5px #000000;
+		-moz-box-shadow: 0 0 5px #000000;
+		box-shadow: 0 0 5px #000000;
+	}
+	.device-preview iframe {
+		border:		0;
+	}
+	
+	/* Menu fix on the demo */
+	.dropdown-menu {
+		z-index:		5000;
+		max-height:		400px;
+		overflow:		auto;
+	}
+</style>
 <div ng-app ng-controller="deviceCtrl">
 	<nav class="navbar navbar-default" role="navigation">
 		<!-- Brand and toggle get grouped for better mobile display -->

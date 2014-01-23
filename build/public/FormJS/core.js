@@ -134,6 +134,7 @@
 		var scope = this;
 		
 		this.options 	= _.extend({
+			showLabel:	true,
 			form:		{},
 			submit:		$(),
 			onSubmit:	function() {},
@@ -325,11 +326,14 @@
 		if (this.theme.line.classname) {
 			line.addClass(this.theme.line.classname);
 		}
-		var label 	= window.formjsFactory.dom(this.theme.label.type, line);
-			label.html(data.label);
-		if (this.theme.label.classname) {
-			label.addClass(this.theme.label.classname);
+		if (this.options.showLabel) {
+			var label 	= window.formjsFactory.dom(this.theme.label.type, line);
+				label.html(data.label);
+			if (this.theme.label.classname) {
+				label.addClass(this.theme.label.classname);
+			}
 		}
+		
 		var field 	= window.formjsFactory.dom(this.theme.field.type, line);
 		if (this.theme.field.classname) {
 			field.addClass(this.theme.field.classname);

@@ -4,9 +4,9 @@
 		this.data 	= data;
 	}
 	// Build the display
-	display.prototype.build = function(line) {
-		this.line		= line;
-		this.img 		= window.formjsFactory.dom("img", line.display);
+	display.prototype.build = function(container) {
+		this.container	= container;
+		this.img 		= window.formjsFactory.dom("img", container);
 		this.img.css("width", "100%");
 		this.img.attr('src', this.data.display.image);
 	}

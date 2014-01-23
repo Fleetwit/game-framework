@@ -2,11 +2,18 @@
 	"name": "game-framework",
 	"version": "1.0.0",
 	"main": [
+		"games/wordsearch/wordsearch.js",
 		"core.js",
 		"games/trivia/trivia.js",
 		"games/trivia/trivia.less",
 		"games/scramble/scramble.js",
 		"games/scramble/scramble.less",
+		"games/memory/memory.js",
+		"games/memory/memory.less",
+		"games/wordsearch/init.js",
+		"games/wordsearch/wordsearch.less",
+		"games/hangman/hangman.js",
+		"games/hangman/hangman.less",
 		"plugins/fleetwit.js",
 		"displays/image.js",
 		"css/game-framework.less"
@@ -17,6 +24,9 @@
 		"json2":		"latest",
 		"FormJS":		"latest",
 		"countdown":	"latest",
-		"screenjs":		"latest"
+		"screenjs":		"latest",
+		"lesscss":		"latest",
+		"gameElements":	"latest",
+		"touchEvent":	"latest"
 	}
 }

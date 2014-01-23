@@ -14,39 +14,42 @@
 		}];	*/
 	}
 	// Build the component
-	game.prototype.build = function(line) {
+	game.prototype.build = function(layers) {
 		var scope = this;
 		
 		console.info("Building level.");
 		
-		line.container.addClass("game-trivia");
+		this.layers = layers;
+		
+		layers.instructions.addClass("game-trivia");
 		
 		// Build the instructions
 		switch (this.data.data.type) {
 			default:
 			case "radio":
-				line.layer.instructions.bg.addClass("instruction-tap");
+				layers.elements.instructions.container.addClass("instruction-tap");
 			break;
 			case "varchar":
-				line.layer.instructions.bg.addClass("instruction-input");
+				layers.elements.instructions.container.addClass("instruction-input");
 			break;
 		}
 		
 		
 		// Display the question, with the bootstrap plugin
-		this.formjs = new window.formjs(line.game, ['bootstrap']).build({
+		this.formjs = new window.formjs(this.layers.elements.game.container, ['bootstrap']).build({
+			showLabel:	false,
 			form:		[_.extend({},this.data.data,{
 				name:		"question",
 				required:	true
 			})],
 			onSubmit:	function(data, formjs) {	// Executed when the entire form validates.
-				line.container.removeClass("has-error");
-				if (data.question == scope.data.data.answer) {
+				scope.layers.elements.game.container.removeClass("has-error");
+				if (data.question.toLowerCase() == scope.data.data.answer.toLowerCase()) {
 					scope.end();
 				} else {
 					// Remove the focus! (bugfix!)
 					$("input").blur();
-					line.container.addClass("has-error");
+					scope.layers.elements.game.container.addClass("has-error");
 					scope.gf.showPenalty(3, function() {
 						// Register the error after the penalty
 						scope.onError(data.question);
@@ -60,8 +63,8 @@
 			},
 			onError:	function(data, formjs) {	// Executed when at least one question didn't validate.
 				console.log("Error!",data, formjs);
-				line.container.removeClass("has-error");
-				line.container.addClass("has-error");
+				scope.layers.elements.game.container.removeClass("has-error");
+				scope.layers.elements.game.container.addClass("has-error");
 				scope.gf.showPenalty();
 			}
 		});

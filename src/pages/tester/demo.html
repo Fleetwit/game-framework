@@ -24,7 +24,79 @@
 		<tr>
 			<td colspan="4" class="content">
 				<div class="game" id="game">
-					<table class="screen gf-levelScore" style="display: none;" data-screenid="level-score">
+					
+					<!-- The games -->
+					<div class="screen" ng-repeat="(levelIndex, level) in gf.levels" data-screenid="level{{levelIndex}}">
+						<div class="layers">
+							<table class="layer layer-instructions" data-layerid="instructions" style="display: none;">
+								<tbody ng-click="level.evt_instructions.hide()">
+									<tr>
+										<td class="gf-header">Level {{levelIndex*1+1}}: {{level.title}}</td>
+									</tr>
+									<tr>
+										<td class="gf-main gf-bg" data-element="container">
+											
+										</td>
+									</tr>
+									<tr>
+										<td class="gf-footer">
+											<div class="gf-btn">Got it</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="layer layer-hint" data-layerid="hint" style="display: none;">
+								<tbody ng-click="level.evt_hint.hide()">
+									<tr>
+										<td class="gf-main gf-bg">
+											{{level.hint}}
+										</td>
+									</tr>
+									<tr>
+										<td class="gf-footer">
+											<div class="gf-btn">Got it</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<table class="layer layer-game" data-layerid="game" style="display: none;">
+								<tbody>
+									<tr>
+										<td class="gf-display" colspan="2" data-element="display"></td>
+									</tr>
+									<tr>
+										<td class="gf-label" colspan="2" data-element="label">{{level.label?level.label:''}}</td>
+									</tr>
+									<tr>
+										<td class="gf-game" colspan="2" data-element="container"></td>
+									</tr>
+									<tr>
+										<td class="gf-footer" style="width: 50%;">
+											<div class="gf-btn gf-secondary" style="border-right: 0px none;" ng-click="level.evt_instructions.show()">How to play</div>
+										</td>
+										<td class="gf-footer" style="width: 50%;">
+											<div class="gf-btn gf-secondary" ng-click="level.evt_hint.show()">Hint</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+					<!-- Penalty Screen -->
+					<table class="screen gf-penalty" data-screenid="penalty">
+						<tbody>
+							<tr>
+								<td>
+									<div class="gf-label">Wrong!</div>
+									<div class="gf-timer">3</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<!-- Level Screen -->
+					<table class="screen gf-levelScore" data-screenid="level-score">
 						<tbody>
 							<tr>
 								<td>
@@ -37,7 +109,9 @@
 							</tr>
 						</tbody>
 					</table>
-					<table class="screen gf-survey" style="display: none;" data-screenid="survey">
+					
+					<!-- Survey Screen -->
+					<table class="screen gf-survey" data-screenid="survey">
 						<tbody>
 							<tr>
 								<td class="gf-main">
@@ -51,7 +125,9 @@
 							</tr>
 						</tbody>
 					</table>
-					<table class="screen gf-end" style="display: none;" data-screenid="end">
+					
+					<!-- End Screen -->
+					<table class="screen gf-end" data-screenid="end">
 						<tbody>
 							<tr>
 								<td class="gf-main">
@@ -82,54 +158,85 @@
 	
 	// Define the levels
 	var levels = [{
-		type:		"scramble",
-		title:		"Scrambled Word",
-		label:		"The name of our company",
-		time:		60,
+		type:		"hangman",
+		title:		"Hangman",
+		label:		"It flies!",
+		time:		600,
 		data:		{
-			word:		"fleetwit"
+			word:		"airplane"
 		},
-		display:	{
-			type:	"image",
-			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
-		}
+		display:	false
+	},{
+		type:		"wordsearch",
+		title:		"Word Search",
+		label:		false,
+		time:		600,
+		data:		{
+			words:		["airplane","directv","legroom","trueblue"]
+		},
+		display:	false
+	},{
+		type:		"memory",
+		title:		"Memory",
+		label:		false,
+		time:		600,
+		data:		{
+			images:		"http://www.fleetwit.com/races/images/jetbluerace/05/"
+		},
+		display:	false
 	},{
 		type:		"trivia",
 		title:		"Trivia",
-		label:		"Trivia question 1",
+		label:		"Last year JetBlue ranked highest in customer satisfaction among all U.S. major airlines. What was JetBlue's original name.",
 		time:		60,
-		hint:		"This is a cool hint!",
-		errors:		2,
+		hint:		"Having trouble? Try here: <a href=\"http://www.jetblue.com/about/ourcompany/history.aspx\" target=\"_blank\">http://www.jetblue.com/about/ourcompany/history.aspx</a>",
+		errors:		10,
 		data:		{
 			type:		"radio",
 			list:		[{
-				label:	"A",
+				label:	"WingTaxi",
 				value:	"A"
 			},{
-				label:	"B",
+				label:	"BlueSky",
 				value:	"B"
 			},{
-				label:	"C",
+				label:	"Skyton",
 				value:	"C"
+			},{
+				label:	"New Air",
+				value:	"D"
 			}],
-			answer:		"A"
+			answer:		"D"
 		},
 		display:	{
 			type:	"image",
-			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/01/image.jpg"
+		}
+	},{
+		type:		"scramble",
+		title:		"Scrambled Word",
+		label:		"JetBlue offers 38 glorious inches of this.",
+		time:		60,
+		hint:		"Just type!",
+		data:		{
+			word:		"legroom"
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/01/image.jpg"
 		}
 	},{
 		type:		"trivia",
 		title:		"Another Trivia",
-		label:		"Complete: \"Hello ____\"",
+		label:		"JetBlue prides itself on giving back to communities. In 2011, JetBlue launched this program designed to inspire kids' imaginations to take flight through reading.",
 		time:		60,
 		data:		{
 			type:		"varchar",
-			answer:		"world"
+			answer:		"Soar With Reading"
 		},
 		display:	{
 			type:	"image",
-			image:	"http://images.nationalgeographic.com/wpf/media-live/photos/000/477/overrides/lyngen-alps-aurora-1-24_47737_600x450.jpg"
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/04/image.jpg"
 		}
 	},{
 		type:		"trivia",
@@ -199,9 +306,17 @@
 	
 	// Define the angular app
 	angular.module('gameFrameworkApp', []).controller('gameCtrl', function($scope) {
+		
+		$scope.gf 				= {};
+		$scope.gf.score 		= {
+			current:		0,
+			total:			0
+		};
+		$scope.gf.levels 		= {};
+		$scope.gf.currentLevel 	= 1;
+		
 		$(function() {
-			var game = new gameFramework($("#game"), []).build({
-				$scope:		$scope,
+			var game = new gameFramework($scope, $("#game"), []).build({
 				levels:		levels,
 				buttons:	$("#game-footer"),
 				onInit:		function(gf) {
