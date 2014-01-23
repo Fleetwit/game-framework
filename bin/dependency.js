@@ -76,27 +76,6 @@ dependency.prototype.verify = function() {
 	// reset
 	this.resolved	= [];
 }
-dependency.prototype.resolve = function(lib, container) {
-	//console.log("resolving ",lib);
-	var scope 	= this;
-	
-	if (!this.nodes[lib]) {
-		this.missing.push(lib);
-		console.log("MISSING LIB: ",lib);
-		return false;
-	}
-	var node	= this.nodes[lib];
-	var i;
-	for (i=0;i<node.dependencies.length;i++) {
-		if (_.indexOf(this.resolved,node.dependencies[i]) === -1) {
-			this.resolve(node.dependencies[i],container);
-		}
-	}
-	this.resolved.push(lib);
-	if (container) {
-		container.push(lib);
-	}
-}
 dependency.prototype.getFor = function(libs) {
 	
 	// Sort
@@ -117,8 +96,9 @@ dependency.prototype.getFor = function(libs) {
 	}
 	
 	// resolve dependecies
+	var resolved = this.resolveList(libs);
 	var includes = this.getIncludeData(
-		this.resolveList(libs)
+		resolved
 	);
 	
 	this.cache[md5id] = includes;
@@ -131,12 +111,35 @@ dependency.prototype.resolveList = function(libs) {
 	for (i=0;i<libs.length;i++) {
 		this.resolve(libs[i],includes);
 	}
-	//console.log("Includes: \n",includes);
 	
 	// reset
 	this.resolved	= [];
 	
 	return includes;
+}
+dependency.prototype.resolve = function(lib, container) {
+	//console.log("resolving ",lib);
+	var scope 	= this;
+	
+	if (!this.nodes[lib]) {
+		this.missing.push(lib);
+		console.log("MISSING LIB: ",lib);
+		return false;
+	}
+	var node	= this.nodes[lib];
+	var i;
+	for (i=0;i<node.dependencies.length;i++) {
+		if (_.indexOf(this.resolved,node.dependencies[i]) === -1) {
+			this.resolve(node.dependencies[i],container);
+		}
+	}
+	if (!_.contains(this.resolved, lib)) {
+		this.resolved.push(lib);
+		if (container) {
+			container.push(lib);
+		}
+	}
+	
 }
 dependency.prototype.getIncludeData = function(libs) {
 	var i;

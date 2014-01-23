@@ -8,17 +8,22 @@
 		"demo.html": {
 			"title":	"Game-Framework - Demo",
 			"filename":	"demo.html",
-			"template":	"app.html"
+			"template":	"app.html",
+			"dependencies":	[
+				"jquery",
+				"bootstrap",
+				"examples",
+				"game-framework",
+				"AngularJS",
+				"lesscss",
+				"stopwatch"
+			]
 		}
 	},
 	"template":		"main.html",
 	"dependencies":	[
-		"jquery",
 		"bootstrap",
 		"examples",
-		"game-framework",
-		"AngularJS",
-		"lesscss",
-		"stopwatch"
+		"AngularJS"
 	]
 }

@@ -3,5 +3,8 @@
 	"version": "1.2.7",
 	"main": [
 		"https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"
-	]
+	],
+	"dependencies":	{
+		"jquery":		"latest"
+	}
 }

@@ -44,7 +44,7 @@
 	cursor:				pointer;
 	
 	@media @mobile {
-		padding:			8px;
+		padding:			5px;
 		font-size:			16px;
 	}
 	@media @tablet {
@@ -79,14 +79,6 @@
 
 
 
-
-
-/* Menu fix on the demo */
-.dropdown-menu {
-	z-index:		5000;
-	max-height:		400px;
-	overflow:		auto;
-}
 
 table.game-framework {
 	width:		100%;
@@ -147,6 +139,7 @@ table.game-framework {
 				
 				.gf-main {
 					height:			100%;
+					vertical-align:	middle;
 				}
 				.gf-footer {
 					height:			0;
@@ -213,10 +206,20 @@ table.game-framework {
 							.text-inset-lightbg(#5F5F5F, #ffffff);
 							text-align:		center;
 							font-weight:	bold;
-							font-size:		24px;
+							font-size:		12px;
 							margin-bottom:	6px;
 							height:			100%;
 							vertical-align:	middle;
+							padding:		5px;
+							@media @mobile {
+								font-size:		12px;
+							}
+							@media @tablet {
+								font-size:		16px;
+							}
+							@media @desktop {
+								font-size:		20px;
+							}
 						}
 						.gf-display {
 							height:			0;
@@ -280,15 +283,5 @@ table.game-framework {
 	}
 	.radio > input[type="radio"]:checked + label {
 		.button-active();
-	}
-}
-
-
-.device-preview {
-	margin:		0 auto;
-	.box-shadow(0, 0, 5px);
-	
-	iframe {
-		border:		0;
 	}
 }

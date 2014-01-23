@@ -1,0 +1,10 @@
+{
+	"name": "textfill",
+	"version": "1.1",
+	"dependencies":	{
+		"jquery":		"latest"
+	},
+	"main": [
+		"http://jquery-textfill.github.io/jquery-textfill/jquery.textfill.min.js"
+	]
+}

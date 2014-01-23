@@ -116,10 +116,8 @@ builder.prototype.buildPage = function(page, callback) {
 					if (p.fileData.dependencies) {
 						pageConf.dependencies = _.union(pageConf.dependencies, p.fileData.dependencies);
 					}
-					
 					// Get the libraries
 					var libs = dependency.getFor(pageConf.dependencies);
-					
 					
 					// Inject into the main template and write
 					var filename 	= scope.base+"/"+scope.buildProfile.output+"/"+p.fileData.filename;

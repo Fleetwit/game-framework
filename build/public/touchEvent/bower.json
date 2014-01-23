@@ -1,0 +1,12 @@
+{
+	"name": "touchEvent",
+	"version": "1.0",
+	"dependencies":	{
+		"jquery":		"latest"
+	},
+	"main": [
+		"jquery.mobile.just-touch.js",
+		"touchevent.js",
+		"jlib.js"
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"name": "gameElements",
+	"version": "1.0.0",
+	"main": [
+		"gameElements.js",
+		"gameElements.less"
+	],
+	"dependencies":	{
+		"jquery":		"latest",
+		"underscore":	"latest",
+		"json2":		"latest",
+		"bootstrap":	"latest",
+		"lesscss":		"latest"
+	}
+}
