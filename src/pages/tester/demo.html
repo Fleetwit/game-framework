@@ -160,17 +160,20 @@
 	var levels = [{
 		type:		"hangman",
 		title:		"Hangman",
-		label:		"It flies!",
-		time:		600,
+		label:		"This word is synonymous with JetBlue's vacation packages",
+		time:		180,
 		data:		{
-			word:		"airplane"
+			word:		"getaways"
 		},
-		display:	false
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/01/image.jpg"
+		}
 	},{
 		type:		"wordsearch",
 		title:		"Word Search",
 		label:		false,
-		time:		600,
+		time:		180,
 		data:		{
 			words:		["airplane","directv","legroom","trueblue"]
 		},
@@ -179,7 +182,7 @@
 		type:		"memory",
 		title:		"Memory",
 		label:		false,
-		time:		600,
+		time:		180,
 		data:		{
 			images:		"http://www.fleetwit.com/races/images/jetbluerace/05/"
 		},
@@ -188,7 +191,7 @@
 		type:		"trivia",
 		title:		"Trivia",
 		label:		"Last year JetBlue ranked highest in customer satisfaction among all U.S. major airlines. What was JetBlue's original name.",
-		time:		60,
+		time:		180,
 		hint:		"Having trouble? Try here: <a href=\"http://www.jetblue.com/about/ourcompany/history.aspx\" target=\"_blank\">http://www.jetblue.com/about/ourcompany/history.aspx</a>",
 		errors:		10,
 		data:		{
@@ -216,7 +219,7 @@
 		type:		"scramble",
 		title:		"Scrambled Word",
 		label:		"JetBlue offers 38 glorious inches of this.",
-		time:		60,
+		time:		180,
 		hint:		"Just type!",
 		data:		{
 			word:		"legroom"
@@ -229,7 +232,7 @@
 		type:		"trivia",
 		title:		"Another Trivia",
 		label:		"JetBlue prides itself on giving back to communities. In 2011, JetBlue launched this program designed to inspire kids' imaginations to take flight through reading.",
-		time:		60,
+		time:		180,
 		data:		{
 			type:		"varchar",
 			answer:		"Soar With Reading"
@@ -237,30 +240,6 @@
 		display:	{
 			type:	"image",
 			image:	"http://www.fleetwit.com/races/images/jetbluerace/04/image.jpg"
-		}
-	},{
-		type:		"trivia",
-		title:		"Trivia",
-		label:		"Trivia question 3",
-		time:		180,
-		hint:		"This is a cool hint!",
-		data:		{
-			type:		"radio",
-			list:		[{
-				label:	"A",
-				value:	"A"
-			},{
-				label:	"B",
-				value:	"B"
-			},{
-				label:	"C",
-				value:	"C"
-			}],
-			answer:		"C"
-		},
-		display:	{
-			type:	"image",
-			image:	"http://www.fleetwit.com/races/images/PeterShankman/07/image.jpg"
 		}
 	}];
 	
