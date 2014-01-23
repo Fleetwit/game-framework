@@ -57,6 +57,7 @@
 				}
 			}
 		});
+		this.keyboard.element.css("margin-top","10px");
 	}
 	game.prototype.check = function() {
 		var i;

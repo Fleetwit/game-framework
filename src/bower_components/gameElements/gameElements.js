@@ -145,7 +145,7 @@
 				var i,j;
 				var keyboard = dom("div", container);
 					keyboard.addClass("gameElements keyboard");
-				
+				output.element = keyboard;
 				if (_.isArray(options.layout)) {
 					var keys = options.layout;
 				} else {
