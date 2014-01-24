@@ -32,7 +32,7 @@
 		});
 		
 		// Create the keyboard
-		this.keyboard = gameElements.keyboard(container, {
+		this.keyboard = gameElements.keyboard(layers.elements.game.container, {
 			layout:	"qwerty",
 			onClick:	function(letter, key) {
 				if (scope.counter < 8) {

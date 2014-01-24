@@ -14,6 +14,8 @@
 		"games/wordsearch/wordsearch.less",
 		"games/hangman/hangman.js",
 		"games/hangman/hangman.less",
+		"games/brokenword/brokenword.js",
+		"games/brokenword/brokenword.less",
 		"plugins/fleetwit.js",
 		"displays/image.js",
 		"css/game-framework.less"

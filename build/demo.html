@@ -18,6 +18,7 @@
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/memory/memory.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/wordsearch/wordsearch.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/hangman/hangman.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/brokenword/brokenword.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/css/game-framework.less" />
 		<script src="public/jquery/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
@@ -44,6 +45,7 @@
 <script src="public/game-framework/games/memory/memory.js"></script>
 <script src="public/game-framework/games/wordsearch/init.js"></script>
 <script src="public/game-framework/games/hangman/hangman.js"></script>
+<script src="public/game-framework/games/brokenword/brokenword.js"></script>
 <script src="public/game-framework/plugins/fleetwit.js"></script>
 <script src="public/game-framework/displays/image.js"></script>
 <script src="public/stopwatch/stopwatch.js"></script>
@@ -210,6 +212,15 @@
 	
 	// Define the levels
 	var levels = [{
+		type:		"brokenword",
+		title:		"Brokenwords",
+		label:		"Connect the city with its proper airport code.",
+		time:		180,
+		data:		{
+			words:	["Newark, NJ|EWR","New Orleans, LA|MSY","St. Croix|STX","Chicago, IL|ORD","West Palm Beach, FL|PBI"]
+		},
+		display:	false
+	},{
 		type:		"hangman",
 		title:		"Hangman",
 		label:		"This word is synonymous with JetBlue's vacation packages",

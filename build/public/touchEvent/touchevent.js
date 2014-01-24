@@ -4,12 +4,16 @@ function touchEvent(el, callback, noPropagation, cellSize) {
 	this.mousedown 	= false;
 	this.cellSize 	= cellSize;
 	this.callback 	= callback;
+	this.stopped	= false;
 	this.clickPos = {
 		x:	0,
 		y:	0
 	};
 	
 	this.element.bind("vmousedown", function(e) {
+		if (scope.stopped) {
+			return true;
+		}
 		// exception on hint and instruction buttons on mobiles
 		if (noPropagation) {
 			var targ;
@@ -42,6 +46,9 @@ function touchEvent(el, callback, noPropagation, cellSize) {
 		});
 	});
 	this.element.bind("vmouseup", function(e) {
+		if (scope.stopped) {
+			return true;
+		}
 		scope.mousedown = false;
 		if (cellSize) {
 			var fixedPos = scope.toGrid(e.pageX,e.pageY);
@@ -65,6 +72,9 @@ function touchEvent(el, callback, noPropagation, cellSize) {
 		}
 	});
 	this.element.bind("vmousemove", function(e) {
+		if (scope.stopped) {
+			return true;
+		}
 		if (cellSize) {
 			var fixedPos = scope.toGrid(e.pageX,e.pageY);
 			scope.callback({
@@ -139,7 +149,5 @@ touchEvent.prototype.toGrid = function(x,y) {
 	}
 };
 touchEvent.prototype.unbind = function() {
-	this.element.unbind("vmousedown");
-	this.element.unbind("vmouseup");
-	this.element.unbind("vmousemove");
+	this.stopped = true;
 };
