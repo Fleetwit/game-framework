@@ -158,6 +158,54 @@
 	
 	// Define the levels
 	var levels = [{
+		type:		"sort",
+		title:		"Sort",
+		label:		"Sort the list alphabetically",
+		time:		180,
+		data:		{
+			list:	[
+				"A",
+				"B",
+				"C",
+				"D",
+				"E"
+			]
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/01/image.jpg"
+		}
+	},{
+		type:		"maze",
+		title:		"Maze",
+		label:		"Find your way home.",
+		time:		180,
+		data:		{
+			map:	"auto"
+		},
+		display:	false
+	},{
+		type:		"imagelabel",
+		title:		"Word/Image Association",
+		label:		"Rank each airline based on customer satisfaction according to Airfare Watchdog.",
+		time:		180,
+		data:		{
+			images:	[{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/01.jpg",
+				label:	"74%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/02.jpg",
+				label:	"81%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/03.jpg",
+				label:	"62%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/04.jpg",
+				label:	"77%"
+			}]
+		},
+		display:	false
+	},{
 		type:		"brokenword",
 		title:		"Brokenwords",
 		label:		"Connect the city with its proper airport code.",

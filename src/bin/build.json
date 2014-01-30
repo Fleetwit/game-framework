@@ -1,0 +1,17 @@
+{
+	"output":	"../bower_components/game-framework/build",
+	"filename":	"game-framework.js",
+	"files":	[
+		"../bower_components/game-framework/core.js",
+		"../bower_components/game-framework/games/trivia/trivia.js",
+		"../bower_components/game-framework/games/scramble/scramble.js",
+		"../bower_components/game-framework/games/memory/memory.js",
+		"../bower_components/game-framework/games/wordsearch/init.js",
+		"../bower_components/game-framework/games/hangman/hangman.js",
+		"../bower_components/game-framework/games/brokenword/brokenword.js",
+		"../bower_components/game-framework/games/imagelabel/imagelabel.js",
+		"../bower_components/game-framework/games/maze/maze.js",
+		"../bower_components/game-framework/plugins/fleetwit.js",
+		"../bower_components/game-framework/displays/image.js"
+	]
+}

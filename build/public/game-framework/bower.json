@@ -16,6 +16,13 @@
 		"games/hangman/hangman.less",
 		"games/brokenword/brokenword.js",
 		"games/brokenword/brokenword.less",
+		"games/sort/sort.js",
+		"games/sort/sort.less",
+		"games/imagelabel/imagelabel.js",
+		"games/imagelabel/imagelabel.less",
+		"games/maze/mazeEditor.js",
+		"games/maze/init.js",
+		"games/maze/maze.less",
 		"plugins/fleetwit.js",
 		"displays/image.js",
 		"css/game-framework.less"
@@ -29,6 +36,7 @@
 		"screenjs":		"latest",
 		"lesscss":		"latest",
 		"gameElements":	"latest",
-		"touchEvent":	"latest"
+		"touchEvent":	"latest",
+		"raphael":		"latest"
 	}
 }

@@ -208,6 +208,8 @@
 				instance.end = function(error) {
 					console.log("level ended");
 					
+					instance.hide();
+					
 					// Save the end time
 					obj.ended = new Date().getTime();
 					

@@ -216,9 +216,11 @@ h4 {
 			.button();
 			vertical-align:	bottom;
 			text-transform:	uppercase;
+			font-weight:	400;
 			
 			&.wrong {
 				.button(#E03F2F);
+				font-weight:	400;
 			}
 			&.found {
 				.button-inset(#5F5F5F);
@@ -229,6 +231,15 @@ h4 {
 				cursor:		default;
 				/* hide the text */
 				.text-hide();
+			}
+			&.inset {
+				@color:		#5F5F5F;
+				border:		1px solid darken(@color, 30%);
+				.gradient(top, darken(@color, 5%), lighten(@color, 5%));
+				.box-shadow-inset(1px, 3px, 2px, darken(@color, 20%));
+				.text-inset(lighten(@color, 20%), rgba(0,0,0,0.4));
+				text-align:	center;
+				cursor:		pointer;
 			}
 			display:	inline-block;
 			padding:	4px 6px;
@@ -245,6 +256,24 @@ h4 {
 			@media @desktop {
 				font-size:		18px;
 				line-height: 	26px;
+			}
+			
+		}
+		
+		&.block {
+			li {
+				.border-radius(0);
+				border-bottom-width:	0;
+				&:first-child {
+					.border-radius-custom(5px, 5px, 0, 0);
+				}
+				&:last-child {
+					.border-radius-custom(0, 0, 5px, 5px);
+					border-bottom-width:	1px;
+				}
+				padding:	6px 6px;
+				display:	block;
+				margin:		0;
 			}
 		}
 	}
@@ -322,6 +351,47 @@ h4 {
 				line-height: 	26px;
 				height:			36px;
 			}
+		}
+	}
+	&.imageContainer {
+		@radius:	5px;
+		.border-radius(@radius);
+		display:		table;
+		width:			100%;
+		position:		relative;
+		
+		.shadow {
+			.border-radius(@radius);
+			
+			background-color:	rgba(0,0,0,0.5);
+			
+			img {
+				width:		100%;
+				.border-radius(@radius);
+			}
+		}
+		.shadow::before {
+			.border-radius(@radius);
+			display:	block;
+			content:	'';
+			position:	absolute;
+			width:		100%;
+			height:		100%;
+			.box-shadow-inset(0, 2px, 5px, rgba(0,0,0,0.4));
+		}
+		.overlay {
+			display:	none;
+			.border-radius-custom(0, 0, @radius, @radius);
+			display:	table-cell;
+			position:	absolute;
+			width:		100%;
+			left:		0;
+			bottom:		0;
+			padding:	5px;
+			vertical-align:	middle;
+			text-align:		center;
+			background-color:	rgba(0,0,0,0.5);
+			.text-inset(#ffffff, rgba(0,0,0,0.4));
 		}
 	}
 }

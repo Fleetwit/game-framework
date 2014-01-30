@@ -19,6 +19,9 @@
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/wordsearch/wordsearch.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/hangman/hangman.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/games/brokenword/brokenword.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/sort/sort.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/imagelabel/imagelabel.less" />
+<link rel="stylesheet/less" type="text/css" href="public/game-framework/games/maze/maze.less" />
 <link rel="stylesheet/less" type="text/css" href="public/game-framework/css/game-framework.less" />
 		<script src="public/jquery/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.7/angular.min.js"></script>
@@ -38,6 +41,7 @@
 <script src="public/touchEvent/jquery.mobile.just-touch.js"></script>
 <script src="public/touchEvent/touchevent.js"></script>
 <script src="public/touchEvent/jlib.js"></script>
+<script src="public/raphael/raphael.js"></script>
 <script src="public/game-framework/games/wordsearch/wordsearch.js"></script>
 <script src="public/game-framework/core.js"></script>
 <script src="public/game-framework/games/trivia/trivia.js"></script>
@@ -46,6 +50,10 @@
 <script src="public/game-framework/games/wordsearch/init.js"></script>
 <script src="public/game-framework/games/hangman/hangman.js"></script>
 <script src="public/game-framework/games/brokenword/brokenword.js"></script>
+<script src="public/game-framework/games/sort/sort.js"></script>
+<script src="public/game-framework/games/imagelabel/imagelabel.js"></script>
+<script src="public/game-framework/games/maze/mazeEditor.js"></script>
+<script src="public/game-framework/games/maze/init.js"></script>
 <script src="public/game-framework/plugins/fleetwit.js"></script>
 <script src="public/game-framework/displays/image.js"></script>
 <script src="public/stopwatch/stopwatch.js"></script>
@@ -212,6 +220,54 @@
 	
 	// Define the levels
 	var levels = [{
+		type:		"sort",
+		title:		"Sort",
+		label:		"Sort the list alphabetically",
+		time:		180,
+		data:		{
+			list:	[
+				"A",
+				"B",
+				"C",
+				"D",
+				"E"
+			]
+		},
+		display:	{
+			type:	"image",
+			image:	"http://www.fleetwit.com/races/images/jetbluerace/01/image.jpg"
+		}
+	},{
+		type:		"maze",
+		title:		"Maze",
+		label:		"Find your way home.",
+		time:		180,
+		data:		{
+			map:	"auto"
+		},
+		display:	false
+	},{
+		type:		"imagelabel",
+		title:		"Word/Image Association",
+		label:		"Rank each airline based on customer satisfaction according to Airfare Watchdog.",
+		time:		180,
+		data:		{
+			images:	[{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/01.jpg",
+				label:	"74%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/02.jpg",
+				label:	"81%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/03.jpg",
+				label:	"62%"
+			},{
+				image:	"http://www.fleetwit.com/races/images/jetbluerace/07/04.jpg",
+				label:	"77%"
+			}]
+		},
+		display:	false
+	},{
 		type:		"brokenword",
 		title:		"Brokenwords",
 		label:		"Connect the city with its proper airport code.",

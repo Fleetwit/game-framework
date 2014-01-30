@@ -375,7 +375,8 @@
 			options = _.extend({
 				number:	4,
 				empty:	"",
-				words:	["hello","world","fleetwit"]
+				words:	["hello","world","fleetwit"],
+				block:	false
 			},options);
 			
 			var output = {
@@ -387,6 +388,9 @@
 			output.build = function() {
 				output.element = dom("ul", container);
 				output.element.addClass("gameElements wordlist");
+				if (options.block) {
+					output.element.addClass("block");
+				}
 			}
 			output.build();
 			
@@ -409,13 +413,16 @@
 				
 				return {
 					empty:	function() {
-						li.addClass("empty").removeClass("wrong");
+						li.addClass("empty").removeClass("wrong").removeClass("inset");
+					},
+					inset:	function() {
+						li.removeClass("empty").removeClass("wrong").addClass("inset");
 					},
 					wrong:	function() {
-						li.removeClass("empty").addClass("wrong");
+						li.removeClass("empty").addClass("wrong").removeClass("inset");
 					},
 					show:	function() {
-						li.removeClass("empty").removeClass("wrong");
+						li.removeClass("empty").removeClass("wrong").removeClass("inset");
 					},
 					set:	function(word) {
 						li.html(word);
@@ -484,10 +491,45 @@
 				}
 				return output;
 			}
-			output.onTouch = function(cb) {
-				output.touchEvent = touchEvent(container, cb, true);
-			}
 			
+			
+			return output;
+		},
+		imageContainer:	function(container, options) {
+			
+			options = _.extend({
+				src:		"",
+				autosize:	true
+			},options);
+			
+			var output = {
+				
+			};
+			
+			output.build = function() {
+				output.container = dom("div", container);
+				output.container.addClass("gameElements imageContainer");
+				
+				output.shadow = dom("div", output.container);
+				output.shadow.addClass("shadow");
+				
+				output.image = dom("img", output.shadow);
+				output.image.attr('src', options.src);
+				
+				
+				output.overlay = dom("div", output.container);
+				output.overlay.addClass("overlay");
+				
+				output.clear = dom("div", container);
+				output.clear.addClass("clearfix");
+				
+			}
+			output.build();
+			
+			output.label = function(str) {
+				output.overlay.fadeIn();
+				output.overlay.html(str);
+			}
 			
 			return output;
 		}
@@ -541,6 +583,20 @@
 		}
 	};
 	
+	var scrollOffset = function(element) {
+		var total = {
+			x:	0,
+			y:	0
+		};
+		while(element.parent().length > 0) {
+			total.x += element.parent().scrollLeft();
+			total.y += element.parent().scrollTop();
+			element = element.parent();
+		}
+		return total;
+	}
+	
+	
 	var drag = function(options) {
 		this.options = _.extend({
 			element:	$(),
@@ -593,9 +649,10 @@
 					if (hit_element) {
 						
 						// Calculate the offset
-						var pos = scope.options.element.position();
-						scope.offset.x = touchData.pos.x-pos.left;
-						scope.offset.y = touchData.pos.y-pos.top;
+						var pos 			= scope.options.element.position();
+						scope.offset.x 		= touchData.pos.x-pos.left;
+						scope.offset.y 		= touchData.pos.y-pos.top;
+						var scroll_offset 	= scrollOffset(scope.options.element);
 						
 						scope.mousedown = true;
 						
@@ -604,14 +661,16 @@
 						
 						// Clone the element
 						scope.clone = scope.options.element.clone().appendTo(scope.options.element.parent());
+						scope.clone.data('clone',true);
+						
 						scope.options.element.css('opacity', 0.2);
 						scope.clone.css('opacity', 0.9);
 						scope.clone.css({
 							position:	'absolute',
 							width:		scope.options.element.outerWidth(),
 							height:		scope.options.element.outerHeight(),
-							left:		touchData.pos.x-scope.offset.x,
-							top:		touchData.pos.y-scope.offset.y
+							left:		touchData.pos.x-scope.offset.x+scroll_offset.x,
+							top:		touchData.pos.y-scope.offset.y+scroll_offset.y
 						});
 						
 						
@@ -644,10 +703,13 @@
 				break;
 				case "mousedrag":
 					if (scope.mousedown) {
+						// Get Scroll Offset
+						var scroll_offset 	= scrollOffset(scope.options.element);
+						
 						// Move the clone
 						scope.clone.css({
-							left:		touchData.pos.x-scope.offset.x,
-							top:		touchData.pos.y-scope.offset.y
+							left:		touchData.pos.x-scope.offset.x+scroll_offset.x,
+							top:		touchData.pos.y-scope.offset.y+scroll_offset.y
 						});
 						
 						// Callback
@@ -658,7 +720,203 @@
 		}, true);
 	}
 	
-	gameElements.drag = drag;
+	
+	
+	
+	var sortlist = function(options) {
+		this.options = _.extend({
+			element:	$(),
+			parent:		$(),
+			onStart:	function() {},
+			onSort:		function() {},
+			onEnd:		function() {},
+			restrict:	"y"
+		},options);
+		
+		// Variables
+		this.mousedown 	= false;
+		this.offset		= {x:0, y:0};
+		this.clone		= $();
+		this.selected	= $();
+		this.items		= this.options.element.children();
+		this.items.css("cursor","move");
+		console.log("this.items",this.items);
+		
+		this.init();
+	}
+	sortlist.prototype.serialize = function(attr) {
+		var output = [];
+		this.options.element.children().each(function(idx, el) {
+			if (!$(el).data('clone')) {
+				if (!attr) {
+					output.push($(el).text());
+				} else {
+					output.push($(el).attr(attr));
+				}
+			}
+		});
+		return output;
+	}
+	sortlist.prototype.remove = function() {
+		this.touchEvent.unbind();
+	}
+	sortlist.prototype.init = function() {
+		var scope = this;
+		
+		this.touchEvent = new touchEvent(this.options.parent, function(touchData) {
+			/*
+			var e2d_element 	= new element2D(scope.options.element);
+			var hit_element		= e2d_element.hittest({
+				x:	touchData.pos.x,
+				y:	touchData.pos.y
+			});
+			*/
+			
+			switch (touchData.type) {
+				case "mousedown":
+					// Check which element we just clicked
+					_.each(scope.items, function(item) {
+						item = $(item);
+						
+						// Get Scroll Offset
+						var scroll_offset 	= scrollOffset(item);
+						
+						// Check if we hit the element
+						var e2d 			= new element2D(item);
+						var hit				= e2d.hittest({
+							x:	touchData.pos.x,
+							y:	touchData.pos.y
+						});
+						
+						
+						
+						if (hit) {
+							
+							console.log("hit",item, touchData.pos.x+scroll_offset.x,touchData.pos.y+scroll_offset.y);
+							
+							// Select the element
+							scope.selected	= item;
+							
+							// Calculate the offset
+							var pos = item.position();
+							scope.offset.x = touchData.pos.x-pos.left;
+							scope.offset.y = touchData.pos.y-pos.top;
+							
+							scope.mousedown = true;
+							
+							// Force the CSS, ignore classes
+							item.css(css(item));
+							
+							// Clone the element
+							scope.clone = item.clone().appendTo(item.parent());
+							scope.clone.data('clone',true);
+							
+							item.css('opacity', 0.2);
+							scope.clone.css('opacity', 0.9);
+							scope.clone.css({
+								position:	'absolute',
+								width:		item.outerWidth(),
+								height:		item.outerHeight(),
+								left:		touchData.pos.x-scope.offset.x+scroll_offset.x,
+								top:		touchData.pos.y-scope.offset.y+scroll_offset.y
+							});
+							
+							// Callback
+							scope.options.onStart();
+							
+							return false;
+						}
+					});
+				break;
+				case "mouseup":
+					if (scope.mousedown) {
+						
+						scope.mousedown = false;
+						
+						
+						scope.options.element.css('opacity', 1);
+						
+						// Remove the clone
+						scope.clone.remove();
+						
+						// Reset the hard styles
+						scope.selected.get(0).style = "";
+						
+						
+						// Callback
+						scope.options.onEnd();
+					}
+				break;
+				case "mousedrag":
+					if (scope.mousedown) {
+						// Get Scroll Offset
+						var scroll_offset 	= scrollOffset(scope.selected);
+						
+						
+						// Get the position of the real element
+						var itemOffset = scope.selected.offset();
+						
+						// Get the position of the clone
+						var cloneOffset = scope.clone.offset();
+						
+						// Correct to get the scroll into account
+						//itemOffset.x = itemOffset.left+scroll_offset.x;
+						//itemOffset.y = itemOffset.top+scroll_offset.y;
+						
+						// Move the clone
+						if (scope.options.restrict && scope.options.restrict == "y") {
+							scope.clone.css({
+								top:		touchData.pos.y-scope.offset.y+scroll_offset.y
+							});
+						} else if (scope.options.restrict && scope.options.restrict == "x") {
+							scope.clone.css({
+								left:		touchData.pos.x-scope.offset.x+scroll_offset.x,
+							});
+						} else {
+							scope.clone.css({
+								left:		touchData.pos.x-scope.offset.x+scroll_offset.x,
+								top:		touchData.pos.y-scope.offset.y+scroll_offset.y
+							});
+						}
+						
+						
+						// Now we compare the position of the elements
+						// Assuming the sort is restricted on Y axis only for now
+						
+						var children = scope.selected.parent().children();
+						
+						// Get the position of the current element
+						var currentIndex = 0;
+						children.each(function(idx, el) {
+							if ($(el).is(scope.selected)) {
+								currentIndex = idx;
+							}
+						})
+						
+						var itemHeight = scope.selected.outerHeight();
+						
+						if (cloneOffset.top < itemOffset.top-(itemHeight/2)) {
+							// If the element is not the first child
+							if (currentIndex > 0) {
+								scope.selected.insertBefore($(children.get(currentIndex-1)));
+								scope.options.onSort();
+							}
+						}
+						if (cloneOffset.top > itemOffset.top+scope.selected.outerHeight()-(itemHeight/2)) {
+							// If the element is not the last child-1 (clone is last, always)
+							if (currentIndex < children.length-1) {
+								scope.selected.insertAfter($(children.get(currentIndex+1)));
+								scope.options.onSort();
+							}
+						}
+					}
+				break;
+			}
+		}, true);
+	}
+	
+	gameElements.drag 		= drag;
+	gameElements.sortlist 	= sortlist;
 	
 	// Global scope
 	window.gameElements 		= gameElements;
